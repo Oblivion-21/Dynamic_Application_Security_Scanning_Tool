@@ -3,9 +3,6 @@ import argparse, os
 
 """
 TODO:
-    - create tests
-    - Run tests
-
     - be able to show test description when list test (i.e. test_name -- description of test)
 """
 
