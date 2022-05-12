@@ -1,11 +1,12 @@
-import socket, ssl
+import socket
+import ssl
 
 
 # Check sites default TLS version
 def default_tls_version(url):
     context = ssl.create_default_context()
     with socket.create_connection((url, '443')) as sock:
-        with context.wrap_socket(sock, server_hostname = url) as ssock:
+        with context.wrap_socket(sock, server_hostname=url) as ssock:
             return ssock.version()
 
 
@@ -57,7 +58,7 @@ def tls_version_connection(url, tls_version):
         context.options |= ssl.OP_NO_TLSv1_2
 
     try:
-        conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname = url)
+        conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=url)
         conn.connect((url, 443))
         if tls_version == 3:
             eval("conn.getpeercert()['version']==3")

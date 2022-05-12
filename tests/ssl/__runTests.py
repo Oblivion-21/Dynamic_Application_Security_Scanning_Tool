@@ -5,7 +5,6 @@ from tls_version import *
 results = {}
 url = sys.argv[1]
 
-
 # Check the default TLS version used
 result = default_tls_version(url)
 results.update({'Default TLS version': result})
