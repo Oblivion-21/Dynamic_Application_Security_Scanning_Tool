@@ -1,6 +1,8 @@
 import argparse
 import os
 
+from tests import ssl, http
+
 """
 TODO:
     - be able to show test description when list test (i.e. test_name -- description of test)
@@ -47,10 +49,11 @@ def run_tests(tests, chosen_package, url):
             print(f"- {test}")
         return
 
-    print(f"Running {chosen_package} tests aginst {url}")
-    path = f"tests/{chosen_package}/__runTests.py"
-    # exec(open(path).read())
-    os.system(f"python {path} {url}")
+    print(f"Running {chosen_package} tests against {url}")
+    if chosen_package == "ssl":
+        ssl.__runTests.run(url)
+    elif chosen_package == "http":
+        http.__runTests.run(url)
 
 
 def main():
