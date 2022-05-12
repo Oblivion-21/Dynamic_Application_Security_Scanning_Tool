@@ -1,11 +1,12 @@
-import argparse, os
+import argparse
+import os
 
+from tests import ssl, http
 
 """
 TODO:
     - be able to show test description when list test (i.e. test_name -- description of test)
 """
-
 
 
 # Get a dic of all the tests we have on hand
@@ -18,15 +19,13 @@ def get_tests():
             for item in dir:
                 tests.update({item: []})
         else:
-            tests.update( {root.split('/')[len(root.split('/'))-1]: files} )
+            tests.update({root.split('/')[len(root.split('/')) - 1]: files})
 
     return tests
 
 
-
-# Print out the tests/test pacakages we have on hand
-def show_tests(tests, test_package = False):
-
+# Print out the tests/test packages we have on hand
+def show_tests(tests, test_package=False):
     if not test_package:
         print('Test packages: ')
         for test in tests:
@@ -41,7 +40,6 @@ def show_tests(tests, test_package = False):
             print(f"- {test}")
 
 
-
 # Run some tests
 def run_tests(tests, chosen_package, url):
     # Break if non-valid package is chosen
@@ -51,10 +49,11 @@ def run_tests(tests, chosen_package, url):
             print(f"- {test}")
         return
 
-    print(f"Running {chosen_package} tests aginst {url}")
-    path = f"tests/{chosen_package}/__runTests.py"
-    # exec(open(path).read())
-    os.system(f"python {path} {url}")
+    print(f"Running {chosen_package} tests against {url}")
+    if chosen_package == "ssl":
+        ssl.__runTests.run(url)
+    elif chosen_package == "http":
+        http.__runTests.run(url)
 
 
 def main():
@@ -63,28 +62,23 @@ def main():
     tests = get_tests()
 
     parser = argparse.ArgumentParser(description='DSAT Prototype')
-    subparsers = parser.add_subparsers(dest = 'mode')
+    subparsers = parser.add_subparsers(dest='mode')
 
-    run_parser = subparsers.add_parser('run', help = 'run some tests')
-    run_parser.add_argument('-r', required = True, help = 'test pacakge to use')
-    run_parser.add_argument('-w', required = True, help = 'website to test aginst')
+    run_parser = subparsers.add_parser('run', help='run some tests')
+    run_parser.add_argument('-r', required=True, help='test pacakge to use')
+    run_parser.add_argument('-w', required=True, help='website to test aginst')
 
-    list_parser = subparsers.add_parser('list', help = 'list the test packages')
-    list_parser.add_argument('-r', help = 'list test for given package')
+    list_parser = subparsers.add_parser('list', help='list the test packages')
+    list_parser.add_argument('-r', help='list test for given package')
 
     args = parser.parse_args()
     # print(args)
-
 
     # Basic menu
     if args.mode == 'list':
         show_tests(tests, args.r)
     elif args.mode == 'run':
         run_tests(tests, args.r, args.w)
-
-
-
-
 
 
 if __name__ == "__main__":

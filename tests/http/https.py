@@ -1,5 +1,6 @@
 import requests
 
+
 def https(url):
     try:
         r = requests.get(f"https://{url}")
@@ -7,5 +8,5 @@ def https(url):
             return 'PASSED'
         else:
             return 'FAILED'
-     except:
-         return 'INCOMPLETE'
+    except:
+        return 'INCOMPLETE'
