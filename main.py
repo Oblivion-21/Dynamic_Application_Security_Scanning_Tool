@@ -29,11 +29,14 @@ def show_tests(tests, test_package=False):
     if not test_package:
         print('Test packages: ')
         for test in tests:
-            print(f"- {test}")
+            if test != '__pycache__':
+                print(f"- {test}")
     elif test_package in tests:
         print(test_package)
         for test in tests[test_package]:
-            print(f"- {test}")
+            test = test[:-3]
+            if test != '__init__' and test != '__runTests':
+                print(f"- {test}")
     else:
         print(f"{test_package} is not in: ")
         for test in tests:
