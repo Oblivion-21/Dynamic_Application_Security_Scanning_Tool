@@ -5,6 +5,8 @@ from websockets import serve
 
 import TestManager
 
+host = "localhost"
+port = 8989
 process_lock = threading.Lock()
 
 
@@ -19,9 +21,10 @@ async def send_msg(ws, msg):
 
 
 async def server():
-    async with serve(msg_hand, "localhost", 8989):
+    async with serve(msg_hand, host, port):
         await asyncio.Future()
 
 
 if __name__ == "__main__":
+    print(f"Websocket API running: {host}:{port}")
     asyncio.run(server())
