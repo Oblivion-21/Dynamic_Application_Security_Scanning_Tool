@@ -22,6 +22,9 @@ npm start
 ## Setup
 
 ```
+pip install pipenv
+pipenv --python 3.10
+pipenv --python 3.9
 pipenv install
 ```
 
