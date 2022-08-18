@@ -13,6 +13,3 @@ async def https_test(ws, url):
         message = 'INCOMPLETE'
     finally:
         await TestManager.send_msg(ws, {"message": message}, True, 'https-test' )
-
-def test_function(num):
-    return num + 1
