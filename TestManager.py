@@ -23,6 +23,7 @@ async def test_manager(ws, msg):
     data = json.loads(msg)
     test_list = list(data["tests"].keys())
 
+    print(ws)
     url='www.google.com' # This will be the website selected by the user to run the test's against
 
     await send_msg(ws, create_suite(test_list))
