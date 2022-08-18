@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 websockets = "*"
 requests = "*"
+pytest = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 
