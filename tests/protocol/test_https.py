@@ -12,4 +12,4 @@ async def https_test(ws, url):
     except:
         message = 'INCOMPLETE'
     finally:
-        await TestManager.send_msg(ws, {"message": message}, True, 'https-test' )
+        await TestManager.send_msg(ws, {"message": message}, True, 'https-test')
