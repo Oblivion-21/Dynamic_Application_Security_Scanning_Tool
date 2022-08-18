@@ -10,6 +10,8 @@ asyncio = "*"
 requests = "*"
 pytest = "*"
 pytest-asyncio = "*"
+mock = "*"
+pytest-mock = "*"
 
 [dev-packages]
 
