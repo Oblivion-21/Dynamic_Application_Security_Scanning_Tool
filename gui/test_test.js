@@ -8,7 +8,8 @@ document.getElementById("test_button").addEventListener("click", () => {
             "message-type": "CREATE_SUITE",
             "sut": "https://site-under-test.com",
             "tests": {
-                "test-test": {}
+                "test-test": {},
+                "https-test": {}
             }
         }`;
         socket.send(msg);
