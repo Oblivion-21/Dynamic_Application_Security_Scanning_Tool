@@ -8,6 +8,8 @@ websockets = "*"
 aiohttp = "*"
 asyncio = "*"
 requests = "*"
+pytest = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 
