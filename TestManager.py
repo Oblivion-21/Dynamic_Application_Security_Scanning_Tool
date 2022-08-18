@@ -2,6 +2,7 @@ import json
 
 import API
 from tests import TestTest
+from tests.protocol import test_https
 
 suit_id = 0
 
@@ -25,6 +26,7 @@ async def test_manager(ws, msg):
     await send_msg(ws, create_suite(test_list))
     await send_msg(ws, start_suite(test_list))
     await TestTest.test_test(ws)
+    await test_https.https_test(ws)
 
 
 def create_suite(tests):
