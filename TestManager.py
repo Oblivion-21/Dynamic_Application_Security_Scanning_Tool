@@ -1,47 +1,61 @@
+from tests import TestRequests
+from lib import requests
+import aiohttp
 import json
-
 import API
-from tests import TestTest
-
-suit_id = 0
 
 
-async def send_msg(ws, msg, test=False, test_type=None):
+suiteID = 0
+
+async def sendMessage(ws, msg, test=False, test_type=None):
     if test:
         test_finished = {
             "message-type": "TEST_FINISHED",
-            "suit-id": suit_id,
+            "suit-id": suiteID,
             "test": test_type,
             "results": msg
         }
-        return await API.send_msg(ws, json.dumps(test_finished))
-    await API.send_msg(ws, msg)
+        return await API.sendMessage(ws, json.dumps(test_finished))
+    await API.sendMessage(ws, msg)
 
 
-async def test_manager(ws, msg):
+async def runTests(ws, msg):
     data = json.loads(msg)
-    test_list = list(data["tests"].keys())
+    testList = list(data['tests'].keys())
+    testConfigs = data['tests']
+    testUrl = data['url']
+    
+    testSuite = await initSuite()
 
-    await send_msg(ws, create_suite(test_list))
-    await send_msg(ws, start_suite(test_list))
-    await TestTest.test_test(ws)
+    await sendMessage(ws, createSuite(testList))
+    await sendMessage(ws, startSuite(testList))    
+    await requests.runSuite(ws, testSuite, testConfigs, testUrl)
 
-
-def create_suite(tests):
-    global suit_id
-    suit_id += 1
-    suit_created = {
+def createSuite(testList):
+    global suiteID
+    suiteID += 1
+    suiteCreated = {
         "message-type": "SUITE_CREATED",
-        "suit-id": suit_id,
-        "tests": tests
+        "suit-id": suiteID,
+        "tests": testList
     }
-    return json.dumps(suit_created)
+    return json.dumps(suiteCreated)
 
 
-def start_suite(tests):
-    suit_started = {
+def startSuite(testList):
+    suiteStarted = {
         "message-type": "SUITE_STARTED",
-        "suit-id": suit_id,
-        "tests": tests
+        "suit-id": suiteID,
+        "tests": testList
     }
-    return json.dumps(suit_started)
+    return json.dumps(suiteStarted)
+
+async def initSuite():
+    #Initialize test name and function map
+    testSuite = {
+        #Enter your test functions and names here
+        'test-test': TestRequests.testTest,
+        'test-test-duplicate': TestRequests.testTestDuplicate
+    }
+
+    return testSuite

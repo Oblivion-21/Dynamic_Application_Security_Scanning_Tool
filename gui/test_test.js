@@ -6,9 +6,10 @@ document.getElementById("test_button").addEventListener("click", () => {
     socket.addEventListener('open', () => {
         const msg = `{
             "message-type": "CREATE_SUITE",
-            "sut": "https://site-under-test.com",
+            "url": "https://google.com",
             "tests": {
-                "test-test": {}
+                "test-test": {},
+                "test-test-duplicate":{}
             }
         }`;
         socket.send(msg);
