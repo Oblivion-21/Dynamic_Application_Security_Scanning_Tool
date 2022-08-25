@@ -35,8 +35,8 @@ async def test_manager(ws, msg):
     await test_ssl.test_default_tls(ws, url)
     # await test_ssl.test_tls_version(ws, url, 'SSLv2')   Need to wait until we have a container so we can
     # await test_ssl.test_tls_version(ws, url, 'SSLv3')   compile open SSL without OPENSSL_NO_SSL2/3
-    await test_ssl.test_tls_version(ws, url, 'TLSv1.0')
-    await test_ssl.test_tls_version(ws, url, 'TLSv1.1')
+    # await test_ssl.test_tls_version(ws, url, 'TLSv1.0') also to suport tls v1.0 and v1.1
+    # await test_ssl.test_tls_version(ws, url, 'TLSv1.1')
     await test_ssl.test_tls_version(ws, url, 'TLSv1.2')
     await test_ssl.test_tls_version(ws, url, 'TLSv1.3')
 
