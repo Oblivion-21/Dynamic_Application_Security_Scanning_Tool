@@ -12,6 +12,7 @@ pytest = "*"
 pytest-asyncio = "*"
 mock = "*"
 pytest-mock = "*"
+urllib3 = "*"
 
 [dev-packages]
 
