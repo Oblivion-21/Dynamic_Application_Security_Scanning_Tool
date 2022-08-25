@@ -2,7 +2,7 @@ import json
 
 import API
 from tests import TestTest
-from tests.protocol import test_https
+from tests.protocol import test_https, test_ssl
 
 suit_id = 0
 
@@ -29,7 +29,16 @@ async def test_manager(ws, msg):
     await send_msg(ws, create_suite(test_list))
     await send_msg(ws, start_suite(test_list))
     await TestTest.test_test(ws)
-    await test_https.https_test(ws, url)
+
+    # Protocol tests
+    await test_https.test_https(ws, url)
+    await test_ssl.test_default_tls(ws, url)
+    # await test_ssl.test_tls_version(ws, url, 'SSLv2')   Need to wait until we have a container so we can
+    # await test_ssl.test_tls_version(ws, url, 'SSLv3')   compile open SSL without OPENSSL_NO_SSL2/3
+    await test_ssl.test_tls_version(ws, url, 'TLSv1.0')
+    await test_ssl.test_tls_version(ws, url, 'TLSv1.1')
+    await test_ssl.test_tls_version(ws, url, 'TLSv1.2')
+    await test_ssl.test_tls_version(ws, url, 'TLSv1.3')
 
 
 def create_suite(tests):
