@@ -11,8 +11,6 @@ document.getElementById("test_button").addEventListener("click", () => {
                 "test-test": {},
                 "test-https": {},
                 "test-default-tls": {},
-                "test-TLSv1.0": {},
-                "test-TLSv1.1": {},
                 "test-TLSv1.2": {},
                 "test-TLSv1.3": {}
             }
