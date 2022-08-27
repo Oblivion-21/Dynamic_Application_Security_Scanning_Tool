@@ -12,8 +12,8 @@ processLock = threading.Lock()
 
 async def messageHand(ws):
     async for msg in ws:
-        with process_lock:
-            await TestManager.runTests(ws, msg)
+        with processLock:
+            await testManager.runTests(ws, msg)
 
 
 async def sendMessage(ws, msg):
