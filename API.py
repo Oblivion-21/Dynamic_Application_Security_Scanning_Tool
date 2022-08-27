@@ -3,17 +3,17 @@ import threading
 
 from websockets import serve
 
-import TestManager
+import testManager
 
 host = "localhost"
 port = 8989
-process_lock = threading.Lock()
+processLock = threading.Lock()
 
 
 async def messageHand(ws):
     async for msg in ws:
-        with process_lock:
-            await TestManager.runTests(ws, msg)
+        with processLock:
+            await testManager.runTests(ws, msg)
 
 
 async def sendMessage(ws, msg):

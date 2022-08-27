@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 websockets = "*"
+aiohttp = "*"
+asyncio = "*"
 
 [dev-packages]
 

@@ -1,10 +1,10 @@
-import TestManager
-from lib.requests import sendRequest
+import testManager
+
 
 async def testTest(ws, session, testConfig, url):
     try:
         testResult = ''
-        response = await sendRequest(session, url)
+        response = await testManager.sendRequest(session, url)
 
         if 'https' in str(response.url):
             testResult = 'Passed'
@@ -16,14 +16,14 @@ async def testTest(ws, session, testConfig, url):
         testResult = 'Incomplete'
         
 
-    await TestManager.sendMessage(ws, {"message": testResult}, True, "test-test")
+    await testManager.sendMessage(ws, {"message": testResult}, True, "testTest")
 
 
 #Duplicate for async testing
 async def testTestDuplicate(ws, session, testConfig, url):
     try:
         testResult = ''
-        response = await sendRequest(session, url)
+        response = await testManager.sendRequest(session, url)
 
         if 'https' in str(response.url):
             testResult = 'Passed'
@@ -35,4 +35,4 @@ async def testTestDuplicate(ws, session, testConfig, url):
         testResult = 'Incomplete'
         
 
-    await TestManager.sendMessage(ws, {"message": testResult}, True, "test-test")
+    await testManager.sendMessage(ws, {"message": testResult}, True, "testTestDuplicate")
