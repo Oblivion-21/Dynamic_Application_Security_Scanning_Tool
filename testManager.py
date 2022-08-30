@@ -36,7 +36,7 @@ def createSuite(testList):
     suiteID += 1
     suiteCreated = {
         "message-type": "SUITE-CREATED",
-        "suit-id": suiteID,
+        "suiteID": suiteID,
         "tests": testList
     }
     return json.dumps(suiteCreated)
@@ -45,7 +45,7 @@ def createSuite(testList):
 def startSuite(testList):
     suiteStarted = {
         "message-type": "SUITE-STARTED",
-        "suit-id": suiteID,
+        "suiteID": suiteID,
         "tests": testList
     }
     return json.dumps(suiteStarted)
@@ -65,14 +65,15 @@ async def sendRequest(session, url):
     try:
         #Fetch individual request content
         async with session.get(url) as response:
-            if response.status != 200:
+            if response.status >= 200 and response.status <= 299:
                 raise aiohttp.ClientResponseError()
 
             #Return awaited response content
             return response
 
     except Exception as e:
-        return 'Request Failed: ' + 'Error code ' + response.status
+        print(e)
+        return response
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url):
