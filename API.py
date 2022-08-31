@@ -3,25 +3,25 @@ import threading
 
 from websockets import serve
 
-import TestManager
+import testManager
 
 host = "localhost"
 port = 8989
-process_lock = threading.Lock()
+processLock = threading.Lock()
 
 
-async def msg_hand(ws):
+async def messageHand(ws):
     async for msg in ws:
-        with process_lock:
-            await TestManager.test_manager(ws, msg)
+        with processLock:
+            await testManager.runTests(ws, msg)
 
 
-async def send_msg(ws, msg):
+async def sendMessage(ws, msg):
     await ws.send(msg)
 
 
 async def server():
-    async with serve(msg_hand, host, port):
+    async with serve(messageHand, host, port):
         await asyncio.Future()
 
 
