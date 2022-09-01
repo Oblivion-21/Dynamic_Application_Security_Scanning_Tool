@@ -14,7 +14,6 @@ async def testTest(ws, session, testConfig, url):
     except Exception as e:
         print(e)
         testResult = 'Incomplete'
-        
 
     await testManager.sendMessage(ws, {"message": testResult}, True, "testTest")
 
@@ -33,6 +32,5 @@ async def testTestDuplicate(ws, session, testConfig, url):
     except Exception as e:
         print(e)
         testResult = 'Incomplete'
-        
 
     await testManager.sendMessage(ws, {"message": testResult}, True, "testTestDuplicate")
