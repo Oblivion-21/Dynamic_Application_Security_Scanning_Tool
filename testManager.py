@@ -1,21 +1,24 @@
-from tests import testRequests
 import aiohttp
 import asyncio
 import json
 import API
+from tests import testRequests
+from tests.protocol import TestHttps, TestSsl
+
+suit_id = 0
 
 
 suiteID = 0
 
-async def sendMessage(ws, msg, test=False, testType=None):
+async def sendMessage(ws, msg, test=False, test_type=None):
     if test:
-        testFinished = {
-            "message-type": "TEST-FINISHED",
+        test_finished = {
+            "message-type": "TEST_FINISHED",
             "suit-id": suiteID,
-            "test": testType,
+            "test": test_type,
             "results": msg
         }
-        return await API.sendMessage(ws, json.dumps(testFinished))
+        return await API.sendMessage(ws, json.dumps(test_finished))
     await API.sendMessage(ws, msg)
 
 
@@ -29,18 +32,14 @@ async def runTests(ws, msg):
 
     await sendMessage(ws, createSuite(testList))
     await sendMessage(ws, startSuite(testList))    
-    await runSuite(ws, testSuite, testConfigs, testUrl)
+    await requests.runSuite(ws, testSuite, testConfigs, testUrl)
 
 def createSuite(testList):
     global suiteID
     suiteID += 1
     suiteCreated = {
-        "message-type": "SUITE-CREATED",
-<<<<<<< HEAD
-        "suiteID": suiteID,
-=======
+        "message-type": "SUITE_CREATED",
         "suit-id": suiteID,
->>>>>>> 232479a (Cleaned up formatting)
         "tests": testList
     }
     return json.dumps(suiteCreated)
@@ -48,12 +47,8 @@ def createSuite(testList):
 
 def startSuite(testList):
     suiteStarted = {
-        "message-type": "SUITE-STARTED",
-<<<<<<< HEAD
-        "suiteID": suiteID,
-=======
+        "message-type": "SUITE_STARTED",
         "suit-id": suiteID,
->>>>>>> 232479a (Cleaned up formatting)
         "tests": testList
     }
     return json.dumps(suiteStarted)
@@ -62,48 +57,9 @@ async def initSuite():
     #Initialize test name and function map
     testSuite = {
         #Enter your test functions and names here
-        'testTest': testRequests.testTest,
-        'testTestDuplicate': testRequests.testTestDuplicate
+        'testTest': TestRequests.testTest,
+        'testTestDuplicate': TestRequests.testTestDuplicate
+      #  'testProtocolHttps': TestHttps.testHttps
     }
 
     return testSuite
-
-#Send singular request with existing asynchronous session
-async def sendRequest(session, url):
-    try:
-        #Fetch individual request content
-        async with session.get(url) as response:
-<<<<<<< HEAD
-            if response.status >= 200 and response.status <= 299:
-=======
-            if response.status != 200:
->>>>>>> 232479a (Cleaned up formatting)
-                raise aiohttp.ClientResponseError()
-
-            #Return awaited response content
-            return response
-
-    except Exception as e:
-<<<<<<< HEAD
-        print(e)
-        return response
-=======
-        return 'Request Failed: ' + 'Error code ' + response.status
->>>>>>> 232479a (Cleaned up formatting)
-
-#Run suite of tests asynchronously
-async def runSuite(ws, testSuite, testConfigs, url):
-    #Stasrt async session
-    async with aiohttp.ClientSession(
-        connector=aiohttp.TCPConnector(ssl=False),
-        timeout=aiohttp.ClientTimeout(total=60)) as session:
-        
-        try:
-            #Call all tests asynchronously 
-            await asyncio.gather(
-                *[testSuite[test](ws, session, testConfigs[test], url) for test in testConfigs.keys()]
-            )
-        except Exception as e:
-            print(e)
-            await sendMessage(ws, {"message": "Invalid test type supplied"}, True, "Other")
-
