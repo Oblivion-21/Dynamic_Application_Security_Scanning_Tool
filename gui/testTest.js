@@ -1,14 +1,15 @@
 "use strict";
 
-document.getElementById("test_button").addEventListener("click", () => {
+document.getElementById("testButton").addEventListener("click", () => {
     const socket = new WebSocket("ws://localhost:8989");
 
     socket.addEventListener('open', () => {
         const msg = `{
-            "message-type": "CREATE_SUITE",
-            "sut": "https://site-under-test.com",
+            "message-type": "CREATE-SUITE",
+            "url": "https://google.com",
             "tests": {
-                "test-test": {},
+                "testTest": {},
+                "testTestDuplicate":{},
                 "test-https": {},
                 "test-default-tls": {},
                 "test-TLSv1.2": {},

@@ -11,6 +11,8 @@ pytest-asyncio = "*"
 mock = "*"
 pytest-mock = "*"
 urllib3 = "*"
+aiohttp = "*"
+asyncio = "*"
 
 [dev-packages]
 
