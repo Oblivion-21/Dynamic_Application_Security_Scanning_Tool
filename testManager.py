@@ -65,7 +65,7 @@ async def sendRequest(session, url):
     try:
         #Fetch individual request content
         async with session.get(url) as response:
-            if response.status >= 200 and response.status <= 299:
+            if response.status < 200 or response.status > 299:
                 raise aiohttp.ClientResponseError()
 
             #Return awaited response content
@@ -73,6 +73,7 @@ async def sendRequest(session, url):
 
     except Exception as e:
         print(e)
+
         return response
 
 #Run suite of tests asynchronously
