@@ -6,7 +6,7 @@ document.getElementById("testButton").addEventListener("click", () => {
     socket.addEventListener('open', () => {
         const msg = `{
             "message-type": "CREATE-SUITE",
-            "url": "https://google.com",
+            "url": "http://google.com",
             "tests": {
                 "testTest": {},
                 "testTestDuplicate":{}
