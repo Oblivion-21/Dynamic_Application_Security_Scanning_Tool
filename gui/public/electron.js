@@ -12,7 +12,7 @@ const createWindow = () => {
     if (dev) {
         win.loadURL("http://localhost:3000");
     } else { 
-        win.loadFile("../build/index.html");
+        win.loadFile("./build/index.html");
     }
     win.webContents.openDevTools();
 };
