@@ -17,7 +17,7 @@ function Main() {
 
         </Tab>
         <Tab eventKey="testing" title="Testing">
-          <Testing/>          
+          <Testing/>
         </Tab>
       </Tabs>
     </Container>
