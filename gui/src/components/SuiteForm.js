@@ -1,21 +1,40 @@
+import {useRef} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-function SuiteForm() {
+function SuiteForm({socket}) {
+  const formRef = useRef();
   const tests = [{
-      name: "cool-test",
-      label: "Cool Test"
+      name: "test-test",
+      mapKey: "testTest",
+      label: "Test Test"
     }, {
-      name: "epic-test",
-      label: "Epic Test"
+      name: "test-test-duplicate",
+      mapKey: "testTestDuplicate",
+      label: "Test Test Duplicate"
     }
   ];
 
+  const sendSuite = (event) => {
+    event.preventDefault();
+    const testStr = tests.filter(
+      test => formRef.current[test.name].checked
+    ).map(
+      test => `"${test.mapKey}": {}`
+    ).join();
+    const msg = `{
+      "message-type": "CREATE-SUITE",
+      "url": "${formRef.current["url"].value}",
+      "tests": {${testStr}}
+    }`;
+    if (socket.readyState === 1) socket.send(msg);
+  }
+
   return (
-    <Form className="w-25 py-2 px-4 bg-secondary text-white d-flex flex-column justify-content-between">
+    <Form ref={formRef} className="w-25 py-2 px-4 bg-secondary text-white d-flex flex-column justify-content-between">
       <Form.Group>
         <Form.Label>URL</Form.Label>
-        <Form.Control type="text" placeholder="google.com"/>
+        <Form.Control name="url" type="text" placeholder="google.com"/>
       </Form.Group>
 
       <Form.Group>
@@ -26,7 +45,7 @@ function SuiteForm() {
         ))}
       </Form.Group>
       
-      <Button variant="outline-light" className="w-100">Submit</Button>
+      <Button variant="outline-light" className="w-100" onClick={sendSuite}>Submit</Button>
     </Form>
   );
 }

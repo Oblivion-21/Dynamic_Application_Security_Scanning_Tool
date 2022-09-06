@@ -3,7 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Testing from "./Testing";
 
-function Main() {
+function Main({socket}) {
   return (
     <Container fluid className="w-75 py-2 px-0">
       <Tabs defaultActiveKey="testing" className="">
@@ -17,7 +17,7 @@ function Main() {
 
         </Tab>
         <Tab eventKey="testing" title="Testing">
-          <Testing/>
+          <Testing socket={socket}/>
         </Tab>
       </Tabs>
     </Container>

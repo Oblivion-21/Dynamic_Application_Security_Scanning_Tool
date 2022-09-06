@@ -3,10 +3,12 @@ import SuiteForm from "./SuiteForm";
 import Main from "./Main";
 
 function App() {
+  const socket = new WebSocket("ws://localhost:8989");
+
   return (
     <Container fluid className="h-100 mh-100 m-0 p-0 d-flex">
-      <Main/>
-      <SuiteForm/>      
+      <Main socket={socket}/>
+      <SuiteForm socket={socket}/>      
     </Container>
   );
 }
