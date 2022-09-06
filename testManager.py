@@ -60,7 +60,6 @@ def stringToFunc(testStr):
 async def initSuite(testList):
     #Initialize test name and function map
     testSuite = {testStr: stringToFunc(testStr) for testStr in testList}
-
     return testSuite
 
 #Send singular request with existing asynchronous session
