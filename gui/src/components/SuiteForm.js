@@ -27,6 +27,8 @@ function SuiteForm({socket}) {
       "url": "${formRef.current["url"].value}",
       "tests": {${testStr}}
     }`;
+    console.log(`Message to send: ${msg}`);
+    console.log(`Socket state: ${socket.readyState}`);
     if (socket.readyState === 1) socket.send(msg);
   }
 
