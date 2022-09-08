@@ -25,7 +25,7 @@ async def runTests(ws, msg):
     testConfigs = data['tests']
     testUrl = data['url']
     
-    testSuite = await initSuite()
+    testSuite = await initSuite(testList)
 
     await sendMessage(ws, createSuite(testList))
     await sendMessage(ws, startSuite(testList))    
@@ -50,19 +50,23 @@ def startSuite(testList):
     }
     return json.dumps(suiteStarted)
 
-async def initSuite():
-    #Initialize test name and function map
-    testSuite = {
-        #Enter your test functions and names here
-        'testTest': testRequests.testTest,
-        'testTestDuplicate': testRequests.testTestDuplicate
-    }
 
+def stringToFunc(testStr):
+    if testStr == "testTest":
+        return testRequests.testTest
+    elif testStr == "testTestDuplicate":
+        return testRequests.testTestDuplicate
+
+async def initSuite(testList):
+    #Initialize test name and function map
+    testSuite = {testStr: stringToFunc(testStr) for testStr in testList}
     return testSuite
 
 #Send singular request with existing asynchronous session
 async def sendRequest(session, url):
     try:
+        if "://" not in url:
+            url = f"https://{url}"
         #Fetch individual request content
         async with session.get(url) as response:
             if response.status < 200 or response.status > 299:
