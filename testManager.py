@@ -10,8 +10,8 @@ suiteID = 0
 async def sendMessage(ws, msg, test=False, testType=None):
     if test:
         testFinished = {
-            "message-type": "TEST-FINISHED",
-            "suit-id": suiteID,
+            "messageType": "TEST-FINISHED",
+            "suiteID": suiteID,
             "test": testType,
             "results": msg
         }
@@ -35,7 +35,7 @@ def createSuite(testList):
     global suiteID
     suiteID += 1
     suiteCreated = {
-        "message-type": "SUITE-CREATED",
+        "messageType": "SUITE-CREATED",
         "suiteID": suiteID,
         "tests": testList
     }
@@ -44,7 +44,7 @@ def createSuite(testList):
 
 def startSuite(testList):
     suiteStarted = {
-        "message-type": "SUITE-STARTED",
+        "messageType": "SUITE-STARTED",
         "suiteID": suiteID,
         "tests": testList
     }
