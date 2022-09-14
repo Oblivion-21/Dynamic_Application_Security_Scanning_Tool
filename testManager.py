@@ -1,4 +1,5 @@
 from tests import testRequests
+from tests import siteMap
 import aiohttp
 import asyncio
 import json
@@ -56,6 +57,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "siteMap":
+        return siteMap.siteMap
 
 async def initSuite(testList):
     #Initialize test name and function map
@@ -72,6 +75,7 @@ async def sendRequest(session, url):
             if response.status < 200 or response.status > 299:
                 raise aiohttp.ClientResponseError()
 
+            print(response.status)
             #Return awaited response content
             return response
 
@@ -79,6 +83,24 @@ async def sendRequest(session, url):
         print(e)
 
         return response
+
+async def getSiteContent(session, url):
+    try:
+        if "://" not in url:
+            url = f"https://{url}"
+        #Fetch individual request content
+        async with session.get(url) as response:
+            if response.status < 200 or response.status > 299:
+                raise aiohttp.ClientResponseError()
+
+            #Return awaited response content
+            return await response.text()
+
+    except Exception as e:
+        print(e)
+
+        return response
+
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url):

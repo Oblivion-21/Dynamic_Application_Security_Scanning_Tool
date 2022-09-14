@@ -7,11 +7,15 @@ function SuiteForm({socket}) {
   const tests = [{
       name: "test-test",
       mapKey: "testTest",
-      label: "Test Test"
+      label: "Test Test",
     }, {
       name: "test-test-duplicate",
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
+    }, {
+      name: "site-map",
+      mapKey: "siteMap",
+      label: "Site Map"
     }
   ];
 
