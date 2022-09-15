@@ -4,5 +4,4 @@ WORKDIR /app
 COPY . .
 
 RUN pip install -r requirements.txt
-RUN echo 'test'
 CMD python API.py
