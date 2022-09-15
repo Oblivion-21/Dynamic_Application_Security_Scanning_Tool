@@ -4,10 +4,10 @@ services:
     front_end:
         build: .
         container_name: DAST
-        # ports:
-        # - '8989:8989'
-        depends_on:
-            - BackEnd
+        ports:
+        - '8989:8989'
+        # depends_on:
+        #     - BackEnd
         volumes:
           - "$HOME/.Xauthority:/root/.Xauthority:rw"
         environment:
