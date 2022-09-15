@@ -1,13 +1,19 @@
 "use strict";
 
 const {app, BrowserWindow} = require("electron");
+const dev = require("electron-is-dev");
 
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 1080,
-        height: 720
+        height: 720,
+        autoHideMenuBar: true
     });
-    win.loadFile("index.html");
+    if (dev) {
+        win.loadURL("http://localhost:3000");
+    } else { 
+        win.loadFile("./build/index.html");
+    }
     win.webContents.openDevTools();
 };
 
