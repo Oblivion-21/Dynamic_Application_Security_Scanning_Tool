@@ -7,7 +7,7 @@ import Suites from "./Suites";
 function Main({socket}) {
   return (
     <Container fluid className="w-75 py-2 px-0">
-      <Tabs defaultActiveKey="testing" className="">
+      <Tabs defaultActiveKey="suites" className="">
         <Tab eventKey="suites" title="Suites">
           <Suites socket={socket}/>
         </Tab>
