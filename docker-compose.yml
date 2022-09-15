@@ -2,20 +2,13 @@ version: '3.9'
 
 services:
     front_end:
-        build: .
-        container_name: DAST
-        ports:
-        - '8989:8989'
-        # depends_on:
-        #     - BackEnd
-        volumes:
-          - "$HOME/.Xauthority:/root/.Xauthority:rw"
-        environment:
-          - DISPLAY=${DISPLAY}
+        build: ./gui
+        container_name: front_end
+        depends_on:
+            - back_end
         network_mode: host
 
-    # BackEnd:
-    #     build: .
-    #     container_name: DASTBackEnd
-    #     ports:
-    #     - '8989:8989'
+    back_end:
+        build: ./app
+        container_name: back_end
+        network_mode: host
