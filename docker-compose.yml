@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+    front_end:
+        build: ./gui
+        container_name: front_end
+        depends_on:
+            - back_end
+        network_mode: host
+
+    back_end:
+        build: ./app
+        container_name: back_end
+        network_mode: host

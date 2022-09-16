@@ -5,7 +5,7 @@ from websockets import serve
 
 import testManager
 
-host = "localhost"
+host = "127.0.0.1"
 port = 8989
 processLock = threading.Lock()
 
