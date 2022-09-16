@@ -68,6 +68,8 @@ async def initSuite(testList):
 #Send singular request with existing asynchronous session
 async def sendRequest(session, url):
     try:
+        if "://" not in url:
+            url = f"https://{url}"
         #Fetch individual request content
         async with session.get(url) as response:
             if response.status < 200 or response.status > 299:
