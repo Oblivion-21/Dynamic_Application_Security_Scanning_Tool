@@ -1,4 +1,5 @@
 from tests import testRequests
+from tests.protocol import manager
 import aiohttp
 import asyncio
 import json
@@ -56,6 +57,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "testProtocols":
+        return manager.testToRun
 
 async def initSuite(testList):
     #Initialize test name and function map
@@ -94,4 +97,4 @@ async def runSuite(ws, testSuite, testConfigs, url):
             )
         except Exception as e:
             print(e)
-            await sendMessage(ws, {"message": "Invalid test type supplied"}, True, "Other")
+            await sendMessage(ws, {"message": f"Invalid test type supplied: {e}"}, True, "Other")

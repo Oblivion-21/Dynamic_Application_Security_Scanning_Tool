@@ -1,6 +1,9 @@
 import testManager
 import socket
 import ssl
+import sys
+sys.path.append("/")
+from app import testManager
 
 
 async def testDefaultTls(ws, url):
@@ -18,7 +21,7 @@ async def testDefaultTls(ws, url):
     except Exception as e:
         message = f'INCOMPLETE - {e}'
     finally:
-        await TestManager.sendMessage(ws, {"message": message}, True, 'test-protocol-default-tls')
+        await testManager.sendMessage(ws, {"message": message}, True, 'test-protocol-default-tls')
 
 
 async def testTlsVersion(ws, url, tls_version, port=443):
@@ -80,4 +83,4 @@ async def testTlsVersion(ws, url, tls_version, port=443):
     except Exception as e:
         message = f'INCOMPLETE - {e}'
     finally:
-        await TestManager.sendMessage(ws, {"message": message}, True, f'test-protocol-{tls_version}')
+        await testManager.sendMessage(ws, {"message": message}, True, f'test-protocol-{tls_version}')
