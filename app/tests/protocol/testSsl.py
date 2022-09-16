@@ -1,4 +1,3 @@
-import testManager
 import socket
 import ssl
 import sys

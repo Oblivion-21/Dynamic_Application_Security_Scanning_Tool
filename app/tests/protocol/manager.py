@@ -1,5 +1,6 @@
 from . import testHttps
 from . import testSsl
+from . import testCertificates
 import asyncio
 
 async def testToRun(ws, session, testConfigs, url):
@@ -14,3 +15,9 @@ async def testToRun(ws, session, testConfigs, url):
     if 'testTlsVersions' in runningTests:
         for version in testConfigs['tlsVersions']:
             await testSsl.testTlsVersion(ws, url, version)
+
+    if 'testSelfSignedCertificate' in runningTests:
+        await testCertificates.testSelfSignedCertificate(ws, url)
+
+    if 'testExpiredCertificate' in runningTests:
+        await testCertificates.testExpiredCertificate(ws, url)
