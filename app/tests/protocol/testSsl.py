@@ -1,8 +1,8 @@
 import socket
 import ssl
 import sys
-sys.path.append("/")
-from app import testManager
+sys.path.append("../../")
+import testManager
 
 
 async def testDefaultTls(ws, url):
@@ -18,7 +18,7 @@ async def testDefaultTls(ws, url):
         else:
             message = 'FAILED'
     except Exception as e:
-        message = f'INCOMPLETE - {e}'
+        message = f'INCOMPLETE - {e.verify_message}'
     finally:
         await testManager.sendMessage(ws, {"message": message}, True, 'test-protocol-default-tls')
 

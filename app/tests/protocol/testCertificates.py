@@ -3,8 +3,14 @@ import socket
 from datetime import datetime
 from time import strptime
 import sys
-sys.path.append("/")
-from app import testManager
+sys.path.append("../../")
+import testManager
+
+'''
+TODO Come back later if we have time to test for
+    - revoked certs (this gets complicated quick)
+    - bad encryption
+'''
 
 async def getCert(url):
     context = ssl.create_default_context()
@@ -62,18 +68,47 @@ async def testExpiredCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, f'test-self-signed-certificate')
+        await testManager.sendMessage(ws, {"message": message}, True, f'test-expired-certificate')
 
 
+async def testWrongHostCertificate(ws, url):
+    '''Check if the SSL certificate is actually for the URL'''
+    message = ''
+    try:
+        cert = await getCert(url)
+        message = 'PASSED'
 
-# try:
-#     url = 'self-signed.badssl.com'
-#     context = ssl.create_default_context()
-#     with socket.create_connection((url, '443')) as sock:
-#         with context.wrap_socket(sock, server_hostname=url) as ssock:
-#             cert = ssock.getpeercert(binary_form=False)
+    except ssl.SSLCertVerificationError as e:
+        if e.verify_code == 62:
+            # 62 = cert is for diff host
+            message = 'FAILED'
+        else:
+            message = f'INCOMPLETE - {e.verify_message}'
 
-# except ssl.SSLCertVerificationError as e:
-#     print (e.verify_code)
-#     if e.verify_code == 62:
-#         print('yes')
+    except Exception as e:
+        message = f'INCOMPLETE - {e}'
+
+    finally:
+        await testManager.sendMessage(ws, {"message": message}, True, f'test-wrong-host-certificate')
+
+
+async def testUntrustedRootCertificate(ws, url):
+    '''Check if we trust the root certificate of the SSL certificate'''
+    message = ''
+    try:
+        cert = await getCert(url)
+        message = 'PASSED'
+
+    except ssl.SSLCertVerificationError as e:
+        if e.verify_code == 19:
+            # 19 = root cert is untrusted
+            message = 'FAILED'
+        else:
+            message = f'INCOMPLETE - {e.verify_message}'
+
+    except Exception as e:
+        message = f'INCOMPLETE - {e}'
+
+    finally:
+        await testManager.sendMessage(ws, {"message": message}, True, f'test-untrusted-root-certificate')
+

@@ -1,7 +1,8 @@
 import requests
 import sys
-sys.path.append("/")
-from app import testManager
+sys.path.append("../../")
+import testManager
+# from app import testManager
 
 
 async def testHttps(ws, session, url):

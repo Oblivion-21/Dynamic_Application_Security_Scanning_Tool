@@ -21,3 +21,9 @@ async def testToRun(ws, session, testConfigs, url):
 
     if 'testExpiredCertificate' in runningTests:
         await testCertificates.testExpiredCertificate(ws, url)
+
+    if 'testWrongHostCertificate' in runningTests:
+        await testCertificates.testWrongHostCertificate(ws, url)
+
+    if 'testUntrustedRootCertificate' in runningTests:
+        await testCertificates.testUntrustedRootCertificate(ws, url)
