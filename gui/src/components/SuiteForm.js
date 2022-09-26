@@ -19,7 +19,11 @@ function SuiteForm({socket}) {
         subTests: [
           "testHttps",
           "testDefaultTls",
-          "testTlsVersions"
+          "testTlsVersions",
+          "testSelfSignedCertificate",
+          "testExpiredCertificate",
+          "testWrongHostCertificate",
+          "testUntrustedRootCertificate"
         ],
         tlsVersions: [
           "TLSv1.1",
