@@ -1,3 +1,4 @@
+import aiohttp
 import mock
 import pytest
 
@@ -5,36 +6,41 @@ from tests.protocol import manager, testHttps, testSsl, testCertificates
 pytest_plugins = 'pytest_asyncio'
 
 
-# @pytest.mark.asyncio
-# async def test_https_true(mocker):
-#     '''check the https status against a known true'''
-#     # SETUP
-#     async_mock = mock.AsyncMock()
-#     mocker.patch('testManager.sendMessage', side_effect=async_mock)
-#     request_mock = mock.AsyncMock()
-#     mocker.patch('testManager.sendRequest', side_effect=request_mock)
-
-#     await testHttps.testHttps(None, None, 'www.google.com')
-#     msg = async_mock.call_args[0][1]['message']
-#     assert msg == 'PASSED'
-
-#     # TEARDOWN
-#     mocker.stopall()
+def getSession():
+    return aiohttp.ClientSession(
+        connector=aiohttp.TCPConnector(ssl=False),
+        timeout=aiohttp.ClientTimeout(total=60)
+    )
 
 
-# @pytest.mark.asyncio
-# async def test_https_false(mocker):
-#     '''check the https status against a known false'''
-#     # SETUP
-#     async_mock = mock.AsyncMock()
-#     mocker.patch('testManager.sendMessage', side_effect=async_mock)
+@pytest.mark.asyncio
+async def test_https_true(mocker):
+    '''check the https status against a known true'''
+    # SETUP
+    async_mock = mock.AsyncMock()
+    mocker.patch('testManager.sendMessage', side_effect=async_mock)
 
-#     await testHttps.testHttps(None, 'httpforever.com')
-#     msg = async_mock.call_args[0][1]['message']
-#     assert msg == 'FAILED'
+    await testHttps.testHttps(None, getSession(), 'www.google.com')
+    msg = async_mock.call_args[0][1]['message']
+    assert msg == 'PASSED'
 
-#     # TEARDOWN
-#     mocker.stopall()
+    # TEARDOWN
+    mocker.stopall()
+
+
+@pytest.mark.asyncio
+async def test_https_false(mocker):
+    '''check the https status against a known false'''
+    # SETUP
+    async_mock = mock.AsyncMock()
+    mocker.patch('testManager.sendMessage', side_effect=async_mock)
+
+    await testHttps.testHttps(None, getSession(), 'httpforever.com')
+    msg = async_mock.call_args[0][1]['message']
+    assert msg == 'FAILED'
+
+    # TEARDOWN
+    mocker.stopall()
 
 
 # # @pytest.mark.asyncio
