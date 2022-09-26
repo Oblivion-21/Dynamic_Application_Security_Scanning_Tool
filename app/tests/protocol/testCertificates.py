@@ -1,9 +1,6 @@
 import ssl
 import socket
 from datetime import datetime
-from time import strptime
-import sys
-sys.path.append("../../")
 import testManager
 
 '''

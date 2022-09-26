@@ -1,7 +1,6 @@
 from . import testHttps
 from . import testSsl
 from . import testCertificates
-import asyncio
 
 async def testToRun(ws, session, testConfigs, url):
     runningTests = testConfigs['subTests']

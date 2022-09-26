@@ -1,7 +1,5 @@
 import socket
 import ssl
-import sys
-sys.path.append("../../")
 import testManager
 
 
