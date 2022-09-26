@@ -14,7 +14,7 @@ def getSession():
 
 
 @pytest.mark.asyncio
-async def test_https_true(mocker):
+async def testHttpsTrue(mocker):
     '''check the https status against a known true'''
     # SETUP
     async_mock = mock.AsyncMock()
@@ -29,7 +29,7 @@ async def test_https_true(mocker):
 
 
 @pytest.mark.asyncio
-async def test_https_false(mocker):
+async def testHttpsFalse(mocker):
     '''check the https status against a known false'''
     # SETUP
     async_mock = mock.AsyncMock()
@@ -104,7 +104,7 @@ async def test_https_false(mocker):
 
 
 @pytest.mark.asyncio
-async def test_tls_12_true(mocker):
+async def testTls12True(mocker):
     '''check TLSv1.2 is enabled against a known true'''
     # SETUP
     async_mock = mock.AsyncMock()
@@ -119,7 +119,7 @@ async def test_tls_12_true(mocker):
 
 
 @pytest.mark.asyncio
-async def test_tls_12_false(mocker):
+async def testTls12False(mocker):
     '''check TLSv1.2 is enabled against a known false'''
     # SETUP
     async_mock = mock.AsyncMock()
@@ -134,7 +134,7 @@ async def test_tls_12_false(mocker):
 
 
 @pytest.mark.asyncio
-async def test_tls_13_true(mocker):
+async def testTls13True(mocker):
     '''check TLSv1.3 is enabled against a known true'''
     # SETUP
     async_mock = mock.AsyncMock()
@@ -149,7 +149,7 @@ async def test_tls_13_true(mocker):
 
 
 @pytest.mark.asyncio
-async def test_tls_13_false(mocker):
+async def testTls13False(mocker):
     '''check TLSv1.3 is enabled against a known true'''
     # SETUP
     async_mock = mock.AsyncMock()
