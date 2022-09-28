@@ -51,4 +51,6 @@ def show(limit=20):
 
 def currentIdentity():
     res = databaseExec("sql/currentIdentity.sql")
+    if len(res) == 0:
+        return 0
     return res[0][0]
