@@ -16,7 +16,9 @@ useDatabase = False
 async def messageHand(ws):
     async for msg in ws:
         if json.loads(msg)["messageType"] == "REQ-HISTORY":
-            await history(ws)
+            # TODO: If no database exists send an appropriate message to GUI
+            if useDatabase:
+                await history(ws)
         else:
             with processLock:
                 await testManager.runTests(ws, msg, useDatabase)
