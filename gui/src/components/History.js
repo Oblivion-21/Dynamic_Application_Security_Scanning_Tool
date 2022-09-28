@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
+import Container from "react-bootstrap/Container";
 
 function History({socket, historyMessage}) {
   const [history, setHistory] = useState([]);
@@ -18,9 +19,9 @@ function History({socket, historyMessage}) {
   };
 
   return (
-    <>
+    <Container fluid className="p-5 d-grid gap-4">
       <Button onClick={updateHistory}>Update History</Button>
-      <Accordion className="p-5">
+      <Accordion>
         {history === undefined ? <></> : history.map((suite, index) => (
           <Accordion.Item eventKey={index} key={index}>
             <Accordion.Header>Suite {suite["suiteID"]} | {suite["url"]}</Accordion.Header>
@@ -39,7 +40,7 @@ function History({socket, historyMessage}) {
           </Accordion.Item>
         ))}
       </Accordion>
-    </>
+    </Container>
   );
 }
 
