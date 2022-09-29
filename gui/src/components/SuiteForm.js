@@ -12,7 +12,10 @@ function SuiteForm({socket}) {
       name: "test-test-duplicate",
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
-    }
+    } ,{ 
+      name: "test-ssrf",
+      mapKey: "testSSRF",
+      label: "Server Sided Request Forgery Test"}
   ];
 
   const sendSuite = (event) => {

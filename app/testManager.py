@@ -1,4 +1,4 @@
-from tests import testRequests
+from tests import testRequests, ssrf
 import aiohttp
 import asyncio
 import json
@@ -22,7 +22,7 @@ async def sendMessage(ws, msg, url="", test=False, testType=None):
 
 async def runTests(ws, msg):
     data = json.loads(msg)
-    testList = list(data['tests'].keys())
+    testList = list(data['tests'].keys()) 
     testConfigs = data['tests']
     testUrl = data['url']
     
@@ -59,6 +59,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "testSSRF":
+        return ssrf.manager.testToRun
 
 async def initSuite(testList):
     #Initialize test name and function map
