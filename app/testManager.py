@@ -1,8 +1,9 @@
-from tests import testRequests, ssrf
+from tests import testRequests
 import aiohttp
 import asyncio
 import json
 import API
+from tests.ssrf import ssrfManager
 
 
 suiteID = 0
@@ -60,7 +61,7 @@ def stringToFunc(testStr):
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
     elif testStr == "testSSRF":
-        return ssrf.manager.testToRun
+        return ssrfManager.testToRun
 
 async def initSuite(testList):
     #Initialize test name and function map
