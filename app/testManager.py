@@ -1,5 +1,5 @@
 from tests import testRequests
-from tests.protocol import manager
+from tests.protocol import protocolManager
 import aiohttp
 import asyncio
 import json
