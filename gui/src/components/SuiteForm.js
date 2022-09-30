@@ -12,7 +12,15 @@ function SuiteForm({socket}) {
       name: "test-test-duplicate",
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
+    }, {
+      name: "test-ddos",
+      mapKey: "testDdos",
+      label: "DDoS Test",
+      testOptions: {
+        ddosDuration: "1"
+      }
     }
+
   ];
 
   const sendSuite = (event) => {
@@ -20,7 +28,11 @@ function SuiteForm({socket}) {
     const testStr = tests.filter(
       test => formRef.current[test.name].checked
     ).map(
-      test => `"${test.mapKey}": {}`
+      test => {
+        if (test.mapKey === "testDdos")
+          return `"${test.mapKey}": ${JSON.stringify(test.testOptions)}`
+        return  `"${test.mapKey}": {}`
+      }
     ).join();
     const msg = `{
       "messageType": "CREATE-SUITE",

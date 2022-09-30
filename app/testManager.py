@@ -1,4 +1,5 @@
 from tests import testRequests
+from tests.ddos import testDdos
 import aiohttp
 import asyncio
 import json
@@ -59,6 +60,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "testDdos":
+        return testDdos.testDdos
 
 async def initSuite(testList):
     #Initialize test name and function map
