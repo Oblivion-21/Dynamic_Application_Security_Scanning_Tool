@@ -22,16 +22,16 @@ function History({socket, historyMessage}) {
     <Container fluid className="p-5 d-grid gap-4">
       <Button onClick={updateHistory}>Update History</Button>
       <Accordion>
-        {history === undefined ? <></> : history.map((suite, index) => (
+        {history === undefined ? <></> : history.map((run, index) => (
           <Accordion.Item eventKey={index} key={index}>
-            <Accordion.Header>Suite {suite["suiteID"]} | {suite["url"]}</Accordion.Header>
+            <Accordion.Header>Run {run["suiteID"]} | {run["url"]}</Accordion.Header>
             <Accordion.Body>
               <Table striped bordered hover>
                 <tbody>
-                  {suite["tests"].map((test, index) => (
+                  {run["tests"].map((test, index) => (
                     <tr key={index}>
                       <td>{test}</td>
-                      <td>{JSON.stringify(suite[test])}</td>
+                      <td>{JSON.stringify(run[test])}</td>
                     </tr>
                   ))}
                 </tbody>
