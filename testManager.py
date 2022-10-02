@@ -69,7 +69,7 @@ async def initSuite(testList):
 async def sendRequest(session, url):
     try:
         if "://" not in url:
-            url = f"https://{url}"
+            url = f"http://{url}"
         #Fetch individual request content
         async with session.get(url) as response:
             if response.status < 200 or response.status > 299:
@@ -87,19 +87,19 @@ async def sendRequest(session, url):
 async def getSiteContent(session, url):
     try:
         if "://" not in url:
-            url = f"https://{url}"
+            url = f"http://{url}"
         #Fetch individual request content
         async with session.get(url) as response:
             if response.status < 200 or response.status > 299:
                 raise aiohttp.ClientResponseError()
 
             #Return awaited response content
-            return await response.text()
+            return (await response.text(), url)
 
     except Exception as e:
         print(e)
 
-        return response
+        return (None,url)
 
 
 #Run suite of tests asynchronously
