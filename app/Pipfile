@@ -8,6 +8,7 @@ websockets = "*"
 aiohttp = "*"
 asyncio = "*"
 cloudmersive-validate-api-client = "*"
+requests = "*"
 
 [dev-packages]
 
