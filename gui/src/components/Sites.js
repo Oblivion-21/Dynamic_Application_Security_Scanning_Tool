@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 
 function Sites() {
     return (
-        <Accordion defaultActiveKey="0">
+        <Accordion>
         <Accordion.Item eventKey="0">
             <Accordion.Header>SSRF</Accordion.Header>
             <Accordion.Body>
