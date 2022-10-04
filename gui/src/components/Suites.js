@@ -4,8 +4,8 @@ import Table from "react-bootstrap/Table";
 
 function Suites({suiteMessage}) {
   const [suites, setSuite] = useState({});
-  
-  const addAndUpdateSuites = useCallback((jsonData) => {
+  const dontPrint = ["messageType", "url", "suiteID", "tests"];
+  const addAndUpdateSuites = (suites, jsonData) => {
     switch (jsonData["messageType"]) {
       case "SUITE-CREATED":
       case "SUITE-STARTED":
@@ -26,7 +26,7 @@ function Suites({suiteMessage}) {
       default:
         break;
     }
-  }, [suites, setSuite]);
+  };
   
   useEffect(() => addAndUpdateSuites(suiteMessage), [suiteMessage]);
 
@@ -38,10 +38,12 @@ function Suites({suiteMessage}) {
           <Accordion.Body>
             <Table striped bordered hover>
               <tbody>
-                {suite[1]["tests"].map((test, index) => (
+                {Object.keys(suite[1])
+                .filter((print) => !dontPrint.includes(print))
+                .map((key, index) => (
                   <tr key={index}>
-                    <td>{test}</td>
-                    <td>{JSON.stringify(suite[1][test])}</td>
+                    <td>{key}</td>
+                    <td>{JSON.stringify(suite[1][key])}</td>
                   </tr>
                 ))}
               </tbody>

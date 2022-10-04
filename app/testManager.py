@@ -1,5 +1,6 @@
 import storageManager
 from tests import testRequests
+from tests.protocol import protocolManager
 import aiohttp
 import asyncio
 import json
@@ -36,7 +37,7 @@ async def runTests(ws, msg, useDatabase=False):
     testList = list(data['tests'].keys())
     testConfigs = data['tests']
     testUrl = data['url']
-    
+
     testSuite = await initSuite(testList)
 
     await sendMessage(ws, createSuite(testUrl, testList, useDatabase))
@@ -76,6 +77,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "testProtocols":
+        return protocolManager.testToRun
 
 async def initSuite(testList):
     #Initialize test name and function map
@@ -106,13 +109,12 @@ async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
     async with aiohttp.ClientSession(
         connector=aiohttp.TCPConnector(ssl=False),
         timeout=aiohttp.ClientTimeout(total=60)) as session:
-        
+
         try:
-            #Call all tests asynchronously 
+            #Call all tests asynchronously
             await asyncio.gather(
                 *[testSuite[test](ws, session, testConfigs[test], url, useDatabase) for test in testConfigs.keys()]
             )
         except Exception as e:
             print(e)
-            await sendMessage(ws, {"message": "Invalid test type supplied"}, True, "Other")
-
+            await sendMessage(ws, {"message": f"Invalid test type supplied: {e}"}, True, "Other")

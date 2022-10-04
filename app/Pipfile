@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 websockets = "*"
+requests = "*"
+pytest = "*"
+pytest-asyncio = "*"
+mock = "*"
+pytest-mock = "*"
+urllib3 = "*"
 aiohttp = "*"
 asyncio = "*"
 psycopg2-binary = "*"
