@@ -1,8 +1,10 @@
+from telnetlib import AUTHENTICATION
 from tests import testRequests
 import aiohttp
 import asyncio
 import json
 import API
+from tests.authentication import authTest 
 
 
 suiteID = 0
@@ -59,6 +61,9 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "bruteForceTest":
+        return authTest.bruteForceTest
+
 
 async def initSuite(testList):
     #Initialize test name and function map

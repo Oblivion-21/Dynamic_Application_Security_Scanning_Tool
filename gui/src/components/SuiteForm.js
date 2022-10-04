@@ -12,6 +12,10 @@ function SuiteForm({socket}) {
       name: "test-test-duplicate",
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
+    }, {
+      name: "brute-force-test",
+      mapKey: "bruteForceTest",
+      label: "Brute Force Test"      
     }
   ];
 
