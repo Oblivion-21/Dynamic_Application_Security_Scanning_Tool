@@ -15,7 +15,10 @@ function SuiteForm({socket}) {
     }, {
       name: "brute-force-test",
       mapKey: "bruteForceTest",
-      label: "Brute Force Test"      
+      label: "Brute Force Test",
+      testOptions: {
+        username: "admin"
+      }
     }
   ];
 
@@ -24,7 +27,11 @@ function SuiteForm({socket}) {
     const testStr = tests.filter(
       test => formRef.current[test.name].checked
     ).map(
-      test => `"${test.mapKey}": {}`
+      test => {
+        if (test.mapKey === "bruteForceTest")
+          return `"${test.mapKey}": ${JSON.stringify(test.testOptions)}`
+        return `"${test.mapKey}": {}`
+      }
     ).join();
     const msg = `{
       "messageType": "CREATE-SUITE",
