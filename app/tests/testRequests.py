@@ -15,7 +15,7 @@ async def testTest(ws, session, testConfig, url):
         print(e)
         testResult = 'Incomplete'
 
-    await testManager.sendMessage(ws, {"message": testResult}, True, "testTest")
+    await testManager.sendMessage(ws, {"message": testResult}, url, True, "testTest")
 
 
 #Duplicate for async testing
@@ -33,4 +33,4 @@ async def testTestDuplicate(ws, session, testConfig, url):
         print(e)
         testResult = 'Incomplete'
 
-    await testManager.sendMessage(ws, {"message": testResult}, True, "testTestDuplicate")
+    await testManager.sendMessage(ws, {"message": testResult}, url, True, "testTestDuplicate")

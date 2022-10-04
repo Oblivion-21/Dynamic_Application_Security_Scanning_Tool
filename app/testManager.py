@@ -8,11 +8,13 @@ import API
 
 suiteID = 0
 
-async def sendMessage(ws, msg, test=False, testType=None):
+
+async def sendMessage(ws, msg, url="", test=False, testType=None):
     if test:
         testFinished = {
-            "message-type": "TEST-FINISHED",
-            "suit-id": suiteID,
+            "messageType": "TEST-FINISHED",
+            "url": url,
+            "suiteID": suiteID,
             "test": testType,
             "results": msg
         }
@@ -28,24 +30,26 @@ async def runTests(ws, msg):
 
     testSuite = await initSuite(testList)
 
-    await sendMessage(ws, createSuite(testList))
-    await sendMessage(ws, startSuite(testList))
+    await sendMessage(ws, createSuite(testUrl, testList))
+    await sendMessage(ws, startSuite(testUrl, testList))
     await runSuite(ws, testSuite, testConfigs, testUrl)
 
-def createSuite(testList):
+def createSuite(testUrl, testList):
     global suiteID
     suiteID += 1
     suiteCreated = {
-        "message-type": "SUITE-CREATED",
+        "messageType": "SUITE-CREATED",
+        "url": testUrl,
         "suiteID": suiteID,
         "tests": testList
     }
     return json.dumps(suiteCreated)
 
 
-def startSuite(testList):
+def startSuite(testUrl, testList):
     suiteStarted = {
-        "message-type": "SUITE-STARTED",
+        "messageType": "SUITE-STARTED",
+        "url": testUrl,
         "suiteID": suiteID,
         "tests": testList
     }
@@ -58,7 +62,7 @@ def stringToFunc(testStr):
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
     elif testStr == "testProtocols":
-        return manager.testToRun
+        return protocolManager.testToRun
 
 async def initSuite(testList):
     #Initialize test name and function map
