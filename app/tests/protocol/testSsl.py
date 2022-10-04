@@ -18,7 +18,7 @@ async def testDefaultTls(ws, url):
     except Exception as e:
         message = f'INCOMPLETE - {e.verify_message}'
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, 'test-protocol-default-tls')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testProtocolDefaultTls')
 
 
 async def testTlsVersion(ws, url, tls_version, port=443):
@@ -80,4 +80,4 @@ async def testTlsVersion(ws, url, tls_version, port=443):
     except Exception as e:
         message = f'INCOMPLETE - {e}'
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, f'test-protocol-{tls_version}')
+        await testManager.sendMessage(ws, {"message": message}, url, True, f'testProtocol{tls_version}')

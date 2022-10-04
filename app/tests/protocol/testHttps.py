@@ -13,4 +13,4 @@ async def testHttps(ws, session, url):
     except Exception as e:
         message = f'INCOMPLETE - {e}'
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, 'testProtocolHttps')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testProtocolHttps')

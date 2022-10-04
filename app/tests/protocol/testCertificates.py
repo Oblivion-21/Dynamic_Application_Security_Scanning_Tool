@@ -37,7 +37,7 @@ async def testSelfSignedCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, f'test-self-signed-certificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testSelfSignedCertificate')
 
 
 
@@ -65,7 +65,7 @@ async def testExpiredCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, f'test-expired-certificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testExpiredCertificate')
 
 
 async def testWrongHostCertificate(ws, url):
@@ -86,7 +86,7 @@ async def testWrongHostCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, f'test-wrong-host-certificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testWrongHostCertificate')
 
 
 async def testUntrustedRootCertificate(ws, url):
@@ -107,5 +107,5 @@ async def testUntrustedRootCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, f'test-untrusted-root-certificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testUntrustedRootCertificate')
 
