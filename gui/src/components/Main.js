@@ -5,6 +5,7 @@ import Tab from "react-bootstrap/Tab";
 import Testing from "./Testing";
 import Suites from "./Suites";
 import History from "./History";
+import Sites from "./Sites";
 
 function Main({socket}) {
   const [suiteMessage, setSuiteMessage] = useState("");
@@ -42,6 +43,9 @@ function Main({socket}) {
         </Tab>
         <Tab eventKey="testing" title="Testing">
           <Testing socket={socket}/>
+        </Tab>
+        <Tab eventKey="sites" title="Sites">
+          <Sites/>
         </Tab>
       </Tabs>
     </Container>
