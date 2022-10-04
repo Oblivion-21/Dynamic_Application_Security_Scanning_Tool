@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
+# from pprint import pprint
 
 # When provided with a URL returns number of forms present
 def get_all_forms(url):
@@ -30,7 +31,7 @@ def get_form_details(form):
 # Submits form defined in form_details
 def submit_form(form_details, url, value):
     
-    target_url = urljoin(url, form_details["action"]) # Creates an absolute URL if submission was relative
+    target_url = urljoin(url, form_details["action"]) # Creates an absolute URL if input was relative
    
     inputs = form_details["inputs"] # Retrieves form inputs
     
@@ -49,24 +50,25 @@ def submit_form(form_details, url, value):
     else:
         return requests.get(target_url, params=data)
 
-# Print all XSS vulnerable forms and return result
+# Determine site vulnerability
 def scan_xss(url):
     
     # Retrieve all forms from the submitted URL
     forms = get_all_forms(url)
     print(f"Detected {len(forms)} forms on {url}.")
-    js_script = "<script>alert('hi')</script>"
+    js_script = "<script>alert('xss')</script>"
     is_vulnerable = False
     for form in forms: 
         form_details = get_form_details(form)
         content = submit_form(form_details, url, js_script).content.decode()
         if js_script in content:
-            print(f"XSS Detected on {url}")
+            # print(f"XSS Detected on {url}")
             # print(f"Form details:")
             # pprint(form_details)
             is_vulnerable = True
-    return is_vulnerable
+            print("XSS Vulnerability Detected?") 
+        return is_vulnerable
 
 if __name__ == "__main__":
-    url = input("Input URL: ")
+    url = input("Please input a URL: ")
     print(scan_xss(url))
