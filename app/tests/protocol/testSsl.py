@@ -3,7 +3,7 @@ import ssl
 import testManager
 
 
-async def testDefaultTls(ws, url):
+async def testDefaultTls(ws, url, useDatabase):
     '''Check a sites default TLS version'''
     try:
         context = ssl.create_default_context()
@@ -18,10 +18,10 @@ async def testDefaultTls(ws, url):
     except Exception as e:
         message = f'INCOMPLETE - {e.verify_message}'
     finally:
-        await testManager.sendMessage(ws, {"message": message}, url, True, 'testProtocolDefaultTls')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testProtocolDefaultTls', useDatabase)
 
 
-async def testTlsVersion(ws, url, tls_version, port=443):
+async def testTlsVersion(ws, url, tls_version, useDatabase, port=443):
     '''Check the tls/ssl versions supported by a site'''
     if tls_version == 'SSLv2':
         context = ssl.SSLContext(ssl.PROTOCOL_SSLv2)
@@ -80,4 +80,4 @@ async def testTlsVersion(ws, url, tls_version, port=443):
     except Exception as e:
         message = f'INCOMPLETE - {e}'
     finally:
-        await testManager.sendMessage(ws, {"message": message}, url, True, f'testProtocol{tls_version}')
+        await testManager.sendMessage(ws, {"message": message}, url, True, f'testProtocol{tls_version}', useDatabase)

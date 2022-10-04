@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 function Suites({suiteMessage}) {
   const [suites, setSuite] = useState({});
   const dontPrint = ["messageType", "url", "suiteID", "tests"];
-  const addAndUpdateSuites = (suites, jsonData) => {
+  const addAndUpdateSuites = useCallback((jsonData) => {
     switch (jsonData["messageType"]) {
       case "SUITE-CREATED":
       case "SUITE-STARTED":
@@ -26,7 +26,7 @@ function Suites({suiteMessage}) {
       default:
         break;
     }
-  };
+  }, [suites, setSuite]);
   
   useEffect(() => addAndUpdateSuites(suiteMessage), [suiteMessage]);
 
