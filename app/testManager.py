@@ -1,9 +1,9 @@
 from tests import testRequests
+from tests.xss import xss
 import aiohttp
 import asyncio
 import json
 import API
-
 
 suiteID = 0
 
@@ -59,6 +59,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "xss":
+        return xss.runTests
 
 async def initSuite(testList):
     #Initialize test name and function map
@@ -98,4 +100,3 @@ async def runSuite(ws, testSuite, testConfigs, url):
         except Exception as e:
             print(e)
             await sendMessage(ws, {"message": "Invalid test type supplied"}, True, "Other")
-
