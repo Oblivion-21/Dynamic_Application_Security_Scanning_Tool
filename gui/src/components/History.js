@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 
 function History({socket, historyMessage}) {
   const [history, setHistory] = useState([]);
+  const dontPrint = ["messageType", "url", "suiteID", "tests"];
 
   useEffect(() => setHistory(historyMessage["results"]), [historyMessage]);
 
@@ -28,10 +29,12 @@ function History({socket, historyMessage}) {
             <Accordion.Body>
               <Table striped bordered hover>
                 <tbody>
-                  {run["tests"].map((test, index) => (
+                  {Object.keys(run)
+                  .filter((print) => !dontPrint.includes(print))
+                  .map((key, index) => (
                     <tr key={index}>
-                      <td>{test}</td>
-                      <td>{JSON.stringify(run[test])}</td>
+                      <td>{key}</td>
+                      <td>{JSON.stringify(run[key])}</td>
                     </tr>
                   ))}
                 </tbody>
