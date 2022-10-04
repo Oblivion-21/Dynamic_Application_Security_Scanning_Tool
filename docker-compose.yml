@@ -12,3 +12,5 @@ services:
         build: ./app
         container_name: back_end
         network_mode: host
+        environment:
+          - PYTHONUNBUFFERED=1 # This is for testing, it lets the container output to the terminal (i.e. print statments for testing)

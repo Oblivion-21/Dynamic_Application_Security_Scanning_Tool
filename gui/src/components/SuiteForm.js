@@ -12,6 +12,26 @@ function SuiteForm({socket}) {
       name: "test-test-duplicate",
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
+    }, {
+      name: "suite-protocol",
+      mapKey: "testProtocols",
+      testOptions: {
+        subTests: [
+          "testHttps",
+          "testDefaultTls",
+          "testTlsVersions",
+          "testSelfSignedCertificate",
+          "testExpiredCertificate",
+          "testWrongHostCertificate",
+          "testUntrustedRootCertificate"
+        ],
+        tlsVersions: [
+          "TLSv1.1",
+          "TLSv1.2",
+          "TLSv1.3"
+        ]
+      },
+      label: "Protocol Versions"
     }
   ];
 
@@ -20,7 +40,11 @@ function SuiteForm({socket}) {
     const testStr = tests.filter(
       test => formRef.current[test.name].checked
     ).map(
-      test => `"${test.mapKey}": {}`
+      test => {
+        if (test.mapKey === "testProtocols")
+          return `"${test.mapKey}": ${JSON.stringify(test.testOptions)}`
+        return `"${test.mapKey}": {}`
+      }
     ).join();
     const msg = `{
       "messageType": "CREATE-SUITE",
