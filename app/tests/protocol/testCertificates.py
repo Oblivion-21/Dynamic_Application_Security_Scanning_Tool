@@ -16,7 +16,7 @@ async def getCert(url):
             return ssock.getpeercert(binary_form=False)
 
 
-async def testSelfSignedCertificate(ws, url):
+async def testSelfSignedCertificate(ws, url, useDatabase):
     '''Check if the SSL certificate is self signed'''
     message = ''
     try:
@@ -37,11 +37,11 @@ async def testSelfSignedCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, url, True, 'testSelfSignedCertificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testSelfSignedCertificate', useDatabase)
 
 
 
-async def testExpiredCertificate(ws, url):
+async def testExpiredCertificate(ws, url, useDatabase):
     '''Check if the SSL certificate is expired'''
     message = ''
     try:
@@ -65,10 +65,10 @@ async def testExpiredCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, url, True, 'testExpiredCertificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testExpiredCertificate', useDatabase)
 
 
-async def testWrongHostCertificate(ws, url):
+async def testWrongHostCertificate(ws, url, useDatabase):
     '''Check if the SSL certificate is actually for the URL'''
     message = ''
     try:
@@ -86,10 +86,10 @@ async def testWrongHostCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, url, True, 'testWrongHostCertificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testWrongHostCertificate', useDatabase)
 
 
-async def testUntrustedRootCertificate(ws, url):
+async def testUntrustedRootCertificate(ws, url, useDatabase):
     '''Check if we trust the root certificate of the SSL certificate'''
     message = ''
     try:
@@ -107,5 +107,5 @@ async def testUntrustedRootCertificate(ws, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, url, True, 'testUntrustedRootCertificate')
+        await testManager.sendMessage(ws, {"message": message}, url, True, 'testUntrustedRootCertificate', useDatabase)
 

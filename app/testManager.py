@@ -1,3 +1,4 @@
+import storageManager
 from tests import testRequests
 from tests.protocol import protocolManager
 import aiohttp
@@ -9,7 +10,14 @@ import API
 suiteID = 0
 
 
-async def sendMessage(ws, msg, url="", test=False, testType=None):
+def setSuiteID():
+    global suiteID
+    temp = storageManager.currentIdentity()
+    print(f"Setting suiteID from database: {temp}")
+    suiteID = temp
+
+
+async def sendMessage(ws, msg, url="", test=False, testType=None, useDatabase=False):
     if test:
         testFinished = {
             "messageType": "TEST-FINISHED",
@@ -18,11 +26,13 @@ async def sendMessage(ws, msg, url="", test=False, testType=None):
             "test": testType,
             "results": msg
         }
+        if useDatabase:
+            storageManager.testUpdate(suiteID, testType, json.dumps(msg))
         return await API.sendMessage(ws, json.dumps(testFinished))
     await API.sendMessage(ws, msg)
 
 
-async def runTests(ws, msg):
+async def runTests(ws, msg, useDatabase=False):
     data = json.loads(msg)
     testList = list(data['tests'].keys())
     testConfigs = data['tests']
@@ -30,11 +40,11 @@ async def runTests(ws, msg):
 
     testSuite = await initSuite(testList)
 
-    await sendMessage(ws, createSuite(testUrl, testList))
-    await sendMessage(ws, startSuite(testUrl, testList))
-    await runSuite(ws, testSuite, testConfigs, testUrl)
+    await sendMessage(ws, createSuite(testUrl, testList, useDatabase))
+    await sendMessage(ws, startSuite(testUrl, testList, useDatabase))
+    await runSuite(ws, testSuite, testConfigs, testUrl, useDatabase)
 
-def createSuite(testUrl, testList):
+def createSuite(testUrl, testList, useDatabase=False):
     global suiteID
     suiteID += 1
     suiteCreated = {
@@ -43,17 +53,23 @@ def createSuite(testUrl, testList):
         "suiteID": suiteID,
         "tests": testList
     }
-    return json.dumps(suiteCreated)
+    jsonData = json.dumps(suiteCreated)
+    if useDatabase:
+        storageManager.insert(suiteID, testUrl, jsonData)
+    return jsonData
 
 
-def startSuite(testUrl, testList):
+def startSuite(testUrl, testList, useDatabase=False):
     suiteStarted = {
         "messageType": "SUITE-STARTED",
         "url": testUrl,
         "suiteID": suiteID,
         "tests": testList
     }
-    return json.dumps(suiteStarted)
+    jsonData = json.dumps(suiteStarted)
+    if useDatabase:
+        storageManager.update(suiteID, jsonData)
+    return jsonData
 
 
 def stringToFunc(testStr):
@@ -88,7 +104,7 @@ async def sendRequest(session, url):
         return response
 
 #Run suite of tests asynchronously
-async def runSuite(ws, testSuite, testConfigs, url):
+async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
     #Stasrt async session
     async with aiohttp.ClientSession(
         connector=aiohttp.TCPConnector(ssl=False),
@@ -97,7 +113,7 @@ async def runSuite(ws, testSuite, testConfigs, url):
         try:
             #Call all tests asynchronously
             await asyncio.gather(
-                *[testSuite[test](ws, session, testConfigs[test], url) for test in testConfigs.keys()]
+                *[testSuite[test](ws, session, testConfigs[test], url, useDatabase) for test in testConfigs.keys()]
             )
         except Exception as e:
             print(e)

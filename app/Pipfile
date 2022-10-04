@@ -13,6 +13,7 @@ pytest-mock = "*"
 urllib3 = "*"
 aiohttp = "*"
 asyncio = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

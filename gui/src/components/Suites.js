@@ -1,11 +1,11 @@
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
 
-function Suites({socket}) {
+function Suites({suiteMessage}) {
   const [suites, setSuite] = useState({});
   const dontPrint = ["messageType", "url", "suiteID", "tests"];
-  const addAndUpdateSuites = (suites, jsonData) => {
+  const addAndUpdateSuites = useCallback((jsonData) => {
     switch (jsonData["messageType"]) {
       case "SUITE-CREATED":
       case "SUITE-STARTED":
@@ -26,15 +26,9 @@ function Suites({socket}) {
       default:
         break;
     }
-  };
+  }, [suites, setSuite]);
   
-  socket.onmessage = (event) => {
-    const data = event.data;
-    const jsonData = JSON.parse(data);
-    console.log(`Recived message ${data}`);
-    addAndUpdateSuites(suites, jsonData);
-    console.log(suites);
-  };
+  useEffect(() => addAndUpdateSuites(suiteMessage), [suiteMessage]);
 
   return (
     <Accordion className="p-5">
@@ -53,9 +47,9 @@ function Suites({socket}) {
                   </tr>
                 ))}
               </tbody>
-            </Table>            
+            </Table>
           </Accordion.Body>
-        </Accordion.Item> 
+        </Accordion.Item>
       ))}
     </Accordion>
   );
