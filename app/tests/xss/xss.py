@@ -3,7 +3,7 @@ import testManager
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 
-async def runTests(ws, session, testConfigs, url):
+async def testXss(ws, session, testConfigs, url):
     try:
         xssResult = scanXss(url)
         if xssResult:
@@ -20,7 +20,7 @@ def getAllForms(url):
     return soup.find_all("form")
 
 # Extracts HTML form information 
-def getFormDetails(form):  
+def getFormDetails(form):
     details = {}
     action = form.attrs.get("action", "").lower()   # Retrieve form action, e.g. target URL
     method = form.attrs.get("method", "get").lower()    # Retrieve form method e.g. POST, GET
@@ -41,7 +41,6 @@ def getFormDetails(form):
 
 # Submits form defined in formDetails
 def submitForm(formDetails, url, value):
-    
     targetUrl = urljoin(url, formDetails["action"]) # Creates an absolute URL if input was relative
    
     inputs = formDetails["inputs"] # Retrieves form inputs
@@ -63,7 +62,6 @@ def submitForm(formDetails, url, value):
 
 # Determine site vulnerability
 def scanXss(url):
-    
     # Retrieve all forms from the submitted URL
     forms = getAllForms(url)
     print(f"\nDetected {len(forms)} forms on {url}.")
