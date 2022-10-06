@@ -66,8 +66,8 @@ function SuiteForm({socket}) {
 
   return (
     <Form ref={formRef} className="w-25 py-2 px-4 bg-secondary text-white d-flex flex-column justify-content-between">
-      <Form.Group>
-        <Form.Label>URL</Form.Label>
+      <Form.Group align="center">
+        <Form.Label><h1>URL</h1></Form.Label>
         <Form.Control name="url" type="text" placeholder="google.com"/>
       </Form.Group>
 
