@@ -13,6 +13,13 @@ function SuiteForm({socket}) {
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
     }, {
+      name: "brute-force-test",
+      mapKey: "bruteForceTest",
+      label: "Brute Force Test",
+      testOptions: {
+        username: "admin"
+      }
+    }, {
       name: "xss",
       mapKey: "xss",
       label: "XSS"
@@ -49,7 +56,7 @@ function SuiteForm({socket}) {
       test => formRef.current[test.name].checked
     ).map(
       test => {
-        if (test.mapKey === "testProtocols")
+        if (test.mapKey === "bruteForceTest" || test.mapKey === "testProtocols")
           return `"${test.mapKey}": ${JSON.stringify(test.testOptions)}`
         return `"${test.mapKey}": {}`
       }

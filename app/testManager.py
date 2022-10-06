@@ -6,6 +6,7 @@ import aiohttp
 import asyncio
 import json
 import API
+from tests.authentication import testBruteForce
 from tests.ssrf import testSsrf
 
 suiteID = 0
@@ -78,6 +79,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "bruteForceTest":
+        return testBruteForce.testBruteForce
     elif testStr == "xss":
         return testXss.testXss
     elif testStr == "testSSRF":
@@ -122,4 +125,4 @@ async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
             )
         except Exception as e:
             print(e)
-            await sendMessage(ws, {"message": f"Invalid test type supplied: {e}"}, True, "Other")
+            await sendMessage(ws, {"message": f"Invalid test type supplied: {e}"}, url, True, "Other")
