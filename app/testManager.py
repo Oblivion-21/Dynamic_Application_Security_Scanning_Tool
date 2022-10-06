@@ -5,6 +5,7 @@ import aiohttp
 import asyncio
 import json
 import API
+from tests.ssrf import testSsrf
 
 
 suiteID = 0
@@ -77,6 +78,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "testSSRF":
+        return testSsrf.testSsrf
     elif testStr == "testProtocols":
         return protocolManager.testToRun
 
