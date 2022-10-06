@@ -5,13 +5,12 @@ import testManager
 
 
 #Setup main fuction taking in url as an argument
-async def main(ws, session, url):
+async def testSsrf(ws, session, testConfigs, url):
     try:
         if "://" not in url:
             url = f"https://{url}"
         requests.get(url) 
-
-    except Exception as e: 
+    except Exception as e:
         return await testManager.sendMessage(ws, {"message": "The URL you have entered either does not exist or is not responding"}, url, True, "testSSRF")
 
     configuration = cloudmersive_validate_api_client.Configuration()
@@ -25,7 +24,7 @@ async def test(ws, url, apiInstance):
     request = cloudmersive_validate_api_client.UrlSsrfRequestFull(f"{url}")
     try:
         apiResponse = apiInstance.domain_ssrf_check(request)
-        await  testManager.sendMessage(ws, {"message": str(apiResponse)}, url, True, "testSSRF")
+        await testManager.sendMessage(ws, {"message": str(apiResponse)}, url, True, "testSSRF")
     except ApiException as e:
         errorException = ("Exception when calling DomainApi->domain_ssrf_check: %s\n" % e)
         await testManager.sendMessage(ws, {"message": str(errorException)}, url, True, "testSSRF")
