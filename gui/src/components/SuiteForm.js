@@ -19,6 +19,34 @@ function SuiteForm({socket}) {
       testOptions: {
         username: "admin"
       }
+    }, {
+      name: "xss",
+      mapKey: "xss",
+      label: "XSS"
+    }, { 
+      name: "test-ssrf",
+      mapKey: "testSSRF",
+      label: "Server Sided Request Forgery"
+    }, {
+      name: "suite-protocol",
+      mapKey: "testProtocols",
+      testOptions: {
+        subTests: [
+          "testHttps",
+          "testDefaultTls",
+          "testTlsVersions",
+          "testSelfSignedCertificate",
+          "testExpiredCertificate",
+          "testWrongHostCertificate",
+          "testUntrustedRootCertificate"
+        ],
+        tlsVersions: [
+          "TLSv1.1",
+          "TLSv1.2",
+          "TLSv1.3"
+        ]
+      },
+      label: "Protocol Versions"
     }
   ];
 
@@ -28,7 +56,7 @@ function SuiteForm({socket}) {
       test => formRef.current[test.name].checked
     ).map(
       test => {
-        if (test.mapKey === "bruteForceTest")
+        if (test.mapKey === "bruteForceTest" || test.mapKey === "testProtocols")
           return `"${test.mapKey}": ${JSON.stringify(test.testOptions)}`
         return `"${test.mapKey}": {}`
       }
@@ -45,8 +73,8 @@ function SuiteForm({socket}) {
 
   return (
     <Form ref={formRef} className="w-25 py-2 px-4 bg-secondary text-white d-flex flex-column justify-content-between">
-      <Form.Group>
-        <Form.Label>URL</Form.Label>
+      <Form.Group align="center">
+        <Form.Label><h1>URL</h1></Form.Label>
         <Form.Control name="url" type="text" placeholder="google.com"/>
       </Form.Group>
 

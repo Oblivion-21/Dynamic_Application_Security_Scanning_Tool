@@ -10,7 +10,7 @@ passList = ["^cH%seY9VP*%f7$k", "ueg+tja(Ush46fJ%",
     "bABAGW+CgXc!h9mt", "&f@Ty7Su(SHmsRqj"
 ]
 
-async def bruteForceTest(ws, session, testConfigs, url):
+async def testBruteForce(ws, session, testConfigs, url, useDatabase):
     if "://" not in url:
         url = f"https://{url}"
 
@@ -49,12 +49,12 @@ async def bruteForceTest(ws, session, testConfigs, url):
                 if statusCodeInit == 0:
                     statusCodeInit = statusCode
                 if statusCodeInit == 405:
-                    await testManager.sendMessage(ws, {"Message": "INVALID"}, url, True, "bruteForceTest")
+                    await testManager.sendMessage(ws, {"Message": "INVALID"}, url, True, "bruteForceTest", useDatabase)
                     return
                 if statusCode != statusCodeInit:
-                    await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "bruteForceTest")
+                    await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "bruteForceTest", useDatabase)
                     return
         
-        await testManager.sendMessage(ws, {"Message": "FAILED"}, url, True, "bruteForceTest")
+        await testManager.sendMessage(ws, {"Message": "FAILED"}, url, True, "bruteForceTest", useDatabase)
     except Exception as e:
-        await testManager.sendMessage(ws, {"Message": f"INCOMPLETE - {e}"}, url, True, "bruteForceTest")
+        await testManager.sendMessage(ws, {"Message": f"INCOMPLETE - {e}"}, url, True, "bruteForceTest", useDatabase)
