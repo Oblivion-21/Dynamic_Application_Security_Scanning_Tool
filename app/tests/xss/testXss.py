@@ -3,16 +3,16 @@ import testManager
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 
-async def testXss(ws, session, testConfigs, url):
+async def testXss(ws, session, testConfigs, url, useDatabase):
     try:
         xssResult = scanXss(url)
         if xssResult:
-            await testManager.sendMessage(ws, {"Message":"FAIL"}, url, True, "xss")
+            await testManager.sendMessage(ws, {"Message": "FAILED"}, url, True, "xss", useDatabase)
         else:
-            await testManager.sendMessage(ws, {"Message":"PASS"}, url, True, "xss")
+            await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "xss", useDatabase)
         
     except Exception as e:
-        await testManager.sendMessage(ws, {"Message":"INCOMPLETE"}, url, True, "xss")
+        await testManager.sendMessage(ws, {"Message": f"INCOMPLETE - {e}"}, url, True, "xss", useDatabase)
               
 # When provided with a URL returns number of forms present
 def getAllForms(url):

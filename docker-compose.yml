@@ -11,4 +11,17 @@ services:
     back_end:
         build: ./app
         container_name: back_end
+        depends_on:
+            - database
         network_mode: host
+        environment:
+          - PYTHONUNBUFFERED=1 # This is for testing, it lets the container output to the terminal (i.e. print statments for testing)
+
+    database:
+        image: postgres:14.5-alpine
+        container_name: dast_database
+        network_mode: host
+        volumes:
+            - /opt/dast/db:/var/lib/postgresql/data
+        env_file:
+            - .db.env
