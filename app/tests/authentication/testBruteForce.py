@@ -26,6 +26,8 @@ async def testBruteForce(ws, session, testConfigs, url, useDatabase):
     username = testConfigs['username']
 
     # extracts html data from site to obtain the request_URL
+
+    #TODO: Fix PostForm block to accept all sites
     for postForm in postFormList:
         action = postForm['action']
         if action == "":
@@ -34,7 +36,14 @@ async def testBruteForce(ws, session, testConfigs, url, useDatabase):
             action = action.replace('.', url)
         elif action[0] == '/':
             action = url + action
+        elif "://" not in action:
+            action = url
         postUrlList.append(action)
+
+    for scripts in soup.find_all("script"):
+        if "https://www.google.com/recaptcha/api.js" in scripts["src"]:
+            await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "bruteForceTest", useDatabase)
+            return
 
     # sends username/password combinations to request_URL to detect status code. If the status code alters then the user has been kicked out
     # and the test is a success
