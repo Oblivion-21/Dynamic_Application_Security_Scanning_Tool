@@ -3,6 +3,7 @@ import testManager
 
 async def testHttps(ws, session, url, useDatabase):
     '''Check if HTTPS is enabled on site'''
+    message = ''
     try:
         response = await testManager.sendRequest(session, url)
 

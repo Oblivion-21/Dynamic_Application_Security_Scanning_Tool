@@ -13,6 +13,7 @@ pytest-mock = "*"
 urllib3 = "*"
 aiohttp = "*"
 asyncio = "*"
+bs4 = "*"
 cloudmersive-validate-api-client = "*"
 psycopg2-binary = "*"
 

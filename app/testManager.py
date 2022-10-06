@@ -1,12 +1,12 @@
 import storageManager
 from tests import testRequests
+from tests.xss import testXss
 from tests.protocol import protocolManager
 import aiohttp
 import asyncio
 import json
 import API
 from tests.ssrf import testSsrf
-
 
 suiteID = 0
 
@@ -78,6 +78,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "xss":
+        return testXss.testXss
     elif testStr == "testSSRF":
         return testSsrf.testSsrf
     elif testStr == "testProtocols":

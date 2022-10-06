@@ -5,6 +5,7 @@ import testManager
 
 async def testDefaultTls(ws, url, useDatabase):
     '''Check a sites default TLS version'''
+    message = ''
     try:
         context = ssl.create_default_context()
         with socket.create_connection((url, '443')) as sock:
@@ -16,13 +17,15 @@ async def testDefaultTls(ws, url, useDatabase):
         else:
             message = 'FAILED'
     except Exception as e:
-        message = f'INCOMPLETE - {e.verify_message}'
+        # TODO: Ask @Duarte why it was e.verify_message
+        message = f'INCOMPLETE - {e}'
     finally:
         await testManager.sendMessage(ws, {"message": message}, url, True, 'testProtocolDefaultTls', useDatabase)
 
 
 async def testTlsVersion(ws, url, tls_version, useDatabase, port=443):
     '''Check the tls/ssl versions supported by a site'''
+    message = ''
     if tls_version == 'SSLv2':
         context = ssl.SSLContext(ssl.PROTOCOL_SSLv2)
         context.maximum_version = ssl.SSLv2

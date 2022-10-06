@@ -12,6 +12,10 @@ function SuiteForm({socket}) {
       name: "test-test-duplicate",
       mapKey: "testTestDuplicate",
       label: "Test Test Duplicate"
+    }, {
+      name: "xss",
+      mapKey: "xss",
+      label: "XSS"
     }, { 
       name: "test-ssrf",
       mapKey: "testSSRF",
