@@ -5,10 +5,16 @@ name = "pypi"
 
 [packages]
 websockets = "*"
+requests = "*"
+pytest = "*"
+pytest-asyncio = "*"
+mock = "*"
+pytest-mock = "*"
+urllib3 = "*"
 aiohttp = "*"
 asyncio = "*"
 cloudmersive-validate-api-client = "*"
-requests = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
