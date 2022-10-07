@@ -30,8 +30,8 @@ function Main({socket}) {
   };
 
   return (
-    <Container fluid className="w-75 py-2 px-0">
-      <Tabs defaultActiveKey="suites" className="">
+    <Container fluid className="w-80 py-2 px-0">
+      <Tabs defaultActiveKey="suites">
         <Tab eventKey="suites" title="Suites">
           <Suites suiteMessage={suiteMessage}/>
         </Tab>
