@@ -52,6 +52,7 @@ function Suites({suiteMessage}) {
         </Accordion.Item>
       ))}
     </Accordion>
+    
   );
 }
 

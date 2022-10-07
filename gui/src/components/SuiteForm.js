@@ -5,17 +5,9 @@ import Button from "react-bootstrap/Button";
 function SuiteForm({socket}) {
   const formRef = useRef();
   const tests = [{
-      name: "test-test",
-      mapKey: "testTest",
-      label: "Test Test"
-    }, {
-      name: "test-test-duplicate",
-      mapKey: "testTestDuplicate",
-      label: "Test Test Duplicate"
-    }, {
       name: "brute-force-test",
       mapKey: "bruteForceTest",
-      label: "Brute Force Test",
+      label: "Brute Force",
       testOptions: {
         username: "admin"
       }
@@ -26,7 +18,7 @@ function SuiteForm({socket}) {
     }, { 
       name: "test-ssrf",
       mapKey: "testSSRF",
-      label: "Server Sided Request Forgery"
+      label: "SSRF"
     }, {
       name: "suite-protocol",
       mapKey: "testProtocols",
@@ -72,21 +64,25 @@ function SuiteForm({socket}) {
   };
 
   return (
-    <Form ref={formRef} className="w-25 py-2 px-4 bg-secondary text-white d-flex flex-column justify-content-between">
+    <Form ref={formRef} className="w-20 py-2 px-3 bg-dark text-white d-flex flex-column justify-content-between">
       <Form.Group align="center">
-        <Form.Label><h1>URL</h1></Form.Label>
-        <Form.Control name="url" type="text" placeholder="google.com"/>
+        <hr />
+        <Form.Label><h3>OPTIONS</h3></Form.Label>
+        <hr className = "mt-1" />
+        <Form.Control name="url" type="text" placeholder="Enter a URL"/>
+        <hr />
       </Form.Group>
-
-      <Form.Group>
+      
+      <Form.Group align="center">
         {tests.map((test, index) => (
-          <Form.Group key={index} className="bg-primary bg-opacity-50 rounded border border-dark py-2 px-4 my-2">
+          <Form.Group key={index} className="bg-primary bg-opacity-25 text-right font-weight-bold text-light rounded border border-primary py-1 px-2 my-2 text-nowrap" align="right">
             <Form.Check className="d-flex justify-content-between" type="checkbox" name={test.name} label={test.label}/>
           </Form.Group>
         ))}
       </Form.Group>
       
-      <Button variant="outline-light" className="w-100" onClick={sendSuite}>Submit</Button>
+      <Button align="center" variant="success" className="mb-1 w-100" onClick={sendSuite}>Submit</Button>
+      
     </Form>
   );
 }
