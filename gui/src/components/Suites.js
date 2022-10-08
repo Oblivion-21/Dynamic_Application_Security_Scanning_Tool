@@ -30,8 +30,15 @@ function Suites({suiteMessage}) {
   
   useEffect(() => addAndUpdateSuites(suiteMessage), [suiteMessage]);
 
+  const accordionOutstyle = {
+    overflowY: "scroll",
+    height: "92vh",
+    maxHeight: "92vh",
+  }
+
   return (
-    <Accordion className="p-5">
+    <div>
+    <Accordion className="p-5 h-5" style={accordionOutstyle}>
       {Object.entries(suites).map((suite, index) => (
         <Accordion.Item eventKey={index} key={index}>
           <Accordion.Header>Suite {suite[1]["suiteID"]} | {suite[1]["url"]}</Accordion.Header>
@@ -52,7 +59,7 @@ function Suites({suiteMessage}) {
         </Accordion.Item>
       ))}
     </Accordion>
-    
+    </div>
   );
 }
 

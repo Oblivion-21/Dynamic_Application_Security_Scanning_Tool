@@ -1,9 +1,16 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Table from 'react-bootstrap/Table';
 
+const accordionOutstyle = {
+    overflowY: "scroll",
+    height: "92vh",
+    maxHeight: "92vh",
+  }
+
 function Sites() {
     return (
-        <Accordion className="accordion accordion-flush">
+        <div>
+        <Accordion className="accordion accordion-flush" style={accordionOutstyle}>
         <Accordion.Item eventKey="0">
             <Accordion.Header>SSRF</Accordion.Header>
             <Accordion.Body>
@@ -104,7 +111,77 @@ function Sites() {
             </Table>
             </Accordion.Body>
         </Accordion.Item>
+        <Accordion.Item eventKey="4">
+            <Accordion.Header>Site Map</Accordion.Header>
+            <Accordion.Body>
+            <Table striped>
+                <thead>
+                    <tr>
+                        <th>Expected Result</th>
+                        <th>Site Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </Table>
+            </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="5">
+            <Accordion.Header>Logging</Accordion.Header>
+            <Accordion.Body>
+            <Table striped>
+                <thead>
+                    <tr>
+                        <th>Expected Result</th>
+                        <th>Site Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </Table>
+            </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="6">
+            <Accordion.Header>Injection</Accordion.Header>
+            <Accordion.Body>
+            <Table striped>
+                <thead>
+                    <tr>
+                        <th>Expected Result</th>
+                        <th>Site Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </Table>
+            </Accordion.Body>
+        </Accordion.Item>
         </Accordion>
+        </div>
     )
 }
 
