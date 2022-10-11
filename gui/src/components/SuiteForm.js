@@ -17,7 +17,7 @@ function SuiteForm({socket}) {
       mapKey: "testDdos",
       label: "DDoS Test",
       testOptions: {
-        ddosDuration: "1"
+        ddosDuration: "30"
       }
     }
 

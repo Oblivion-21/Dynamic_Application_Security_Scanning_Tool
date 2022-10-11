@@ -2,16 +2,7 @@ import subprocess
 import testManager
 import errno
 import threading
-
-
-async def timeout(process):
-    '''Timer function to kill the DDoS attack after the specified timeout period'''
-    if process.poll() is None:
-        try:
-            process.kill()
-        except OSError as e:
-            if e.errno != errno.ESRCH:
-                raise
+import time
 
 
 async def testDdos(ws, session, config, url):
@@ -20,15 +11,13 @@ async def testDdos(ws, session, config, url):
     try:
         if '://' not in url:
             url = f"https://{url}"
-        dos = subprocess.Popen(f'go run /app/hulk/hulk.go -site {url}', shell=True)
-        timer = await threading.Timer( int(config['ddosDuration']), timeout, [dos] )
+        dos = subprocess.Popen(f"timeout {config['ddosDuration']} go run /app/hulk/hulk.go -site {url}", shell=True, stderr = subprocess.PIPE)
 
-        timer.start()
-        timer.join()
-        timer.cancel()
-
+        time.sleep(int(config['ddosDuration']) + 3)
         # Test if the website is still up, we get a response back it means it surived the DoS
         response = await testManager.sendRequest(session, url)
+
+        message = 'PASSED'
 
     # except aiohttp.ClientResponseError:
     #     message = 'FAILED'
