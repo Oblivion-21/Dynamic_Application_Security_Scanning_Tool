@@ -5,7 +5,7 @@ import threading
 import time
 
 
-async def testDdos(ws, session, config, url):
+async def testDdos(ws, session, config, url, useDatabase):
     '''DDoS test against site'''
     message = 'PASSED'
     try:
@@ -26,4 +26,4 @@ async def testDdos(ws, session, config, url):
         message = f'INCOMPLETE - {e}'
 
     finally:
-        await testManager.sendMessage(ws, {"message": message}, True, 'testDdos')
+        await testManager.sendMessage(ws, {"message": message}, True, 'testDdos', useDatabase)
