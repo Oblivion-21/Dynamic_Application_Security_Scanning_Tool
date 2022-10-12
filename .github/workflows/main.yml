@@ -20,5 +20,6 @@ jobs:
           cache-dependency-path: 'app/Pipfile.lock'
       - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+      - working-directory: app
       - run: pipenv install
       - run: pipenv run pytest
