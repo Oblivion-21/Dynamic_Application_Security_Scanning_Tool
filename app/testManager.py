@@ -1,11 +1,8 @@
 import storageManager
 from tests import testRequests
-<<<<<<< HEAD
 from tests.ddos import testDdos
-=======
 from tests.xss import testXss
 from tests.protocol import protocolManager
->>>>>>> main
 import aiohttp
 import asyncio
 import json
