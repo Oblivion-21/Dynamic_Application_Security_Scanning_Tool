@@ -18,10 +18,11 @@ function SuiteForm({socket}) {
     }, {
       name: "test-ddos",
       mapKey: "testDdos",
-      label: "DDoS Test",
+      label: "DDoS",
       testOptions: {
         ddosDuration: "30"
       }
+    }, {
       name: "xss",
       mapKey: "xss",
       label: "XSS"
