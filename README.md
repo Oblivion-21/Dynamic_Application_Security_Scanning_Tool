@@ -36,3 +36,10 @@ cd app
 pipenv run python API.py
 ```
 
+## Testing
+
+```
+cd app
+pipenv run pytest
+```
+
