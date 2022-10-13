@@ -1,51 +1,44 @@
-import aiohttp
 import mock
 import pytest
 
 from tests.xss import testXss
 pytest_plugins = 'pytest_asyncio'
 
-
+# Test XSS against a known True
 @pytest.mark.asyncio
-async def testHttpsTrue(mocker):
-    '''check the https status against a known true'''
-    # SETUP
+async def testXssTrue(mocker):
+
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testHttps.testHttps(None, getSession(), 'www.google.com', False)
+    await testXss.testXss(None, None, None, 'https://github.com/Oblivion-21/Dynamic_Application_Security_Scanning_Tool/', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
-    # TEARDOWN
     mocker.stopall()
 
-
+# Test XSS against a known False
 @pytest.mark.asyncio
-async def testHttpsFalse(mocker):
-    '''check the https status against a known false'''
-    # SETUP
+async def testXssFalse(mocker):
+
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testHttps.testHttps(None, getSession(), 'httpforever.com', False)
+    await testXss.testXss(None, None, None, 'https://xss-game.appspot.com/level1/frame', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
-    # TEARDOWN
     mocker.stopall()
 
-
+# Test XSS against a known Incomplete
 @pytest.mark.asyncio
-async def testSelfSignedCertificateInvalid(mocker):
-    '''check self signed certificate aginst known invalid'''
-    # SETUP
+async def testXssIncomplete(mocker):
+
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testSelfSignedCertificate(None, 'expired.badssl.com', False)
+    await testXss.testXss(None, None, None, 'https://google.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert 'INCOMPLETE' in msg
 
-    # TEARDOWN
     mocker.stopall()
