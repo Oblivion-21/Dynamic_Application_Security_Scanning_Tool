@@ -2,7 +2,7 @@ import aiohttp
 import mock
 import pytest
 
-from tests.protocol import manager, testHttps, testSsl, testCertificates
+from tests.protocol import testHttps, testSsl, testCertificates
 pytest_plugins = 'pytest_asyncio'
 
 
@@ -20,7 +20,7 @@ async def testHttpsTrue(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testHttps.testHttps(None, getSession(), 'www.google.com')
+    await testHttps.testHttps(None, getSession(), 'www.google.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
@@ -35,7 +35,7 @@ async def testHttpsFalse(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testHttps.testHttps(None, getSession(), 'httpforever.com')
+    await testHttps.testHttps(None, getSession(), 'httpforever.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
@@ -140,7 +140,7 @@ async def testTls13True(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testSsl.testTlsVersion(None, 'www.google.com', 'TLSv1.3')
+    await testSsl.testTlsVersion(None, 'www.google.com', 'TLSv1.3', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
@@ -155,7 +155,7 @@ async def testTls13False(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testSsl.testTlsVersion(None, 'tls-v1-0.badssl.com', 'TLSv1.3')
+    await testSsl.testTlsVersion(None, 'tls-v1-0.badssl.com', 'TLSv1.3', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
@@ -170,7 +170,7 @@ async def testSelfSignedCertificateFail(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testSelfSignedCertificate(None, 'self-signed.badssl.com')
+    await testCertificates.testSelfSignedCertificate(None, 'self-signed.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
@@ -185,7 +185,7 @@ async def testSelfSignedCertificatePass(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testSelfSignedCertificate(None, 'google.com')
+    await testCertificates.testSelfSignedCertificate(None, 'google.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
@@ -200,7 +200,7 @@ async def testSelfSignedCertificateInvalid(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testSelfSignedCertificate(None, 'expired.badssl.com')
+    await testCertificates.testSelfSignedCertificate(None, 'expired.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert 'INCOMPLETE' in msg
 
@@ -215,7 +215,7 @@ async def testExpiredCertificateFail(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testExpiredCertificate(None, 'expired.badssl.com')
+    await testCertificates.testExpiredCertificate(None, 'expired.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
@@ -230,7 +230,7 @@ async def testExpiredCertificatePass(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testExpiredCertificate(None, 'google.com')
+    await testCertificates.testExpiredCertificate(None, 'google.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
@@ -245,7 +245,7 @@ async def testExpiredCertificateInvalid(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testExpiredCertificate(None, 'self-signed.badssl.com')
+    await testCertificates.testExpiredCertificate(None, 'self-signed.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert 'INCOMPLETE' in msg
 
@@ -260,7 +260,7 @@ async def testWrongHostCertificateFail(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testWrongHostCertificate(None, 'wrong.host.badssl.com')
+    await testCertificates.testWrongHostCertificate(None, 'wrong.host.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
@@ -275,7 +275,7 @@ async def testWrongHostCertificatePass(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testWrongHostCertificate(None, 'google.com')
+    await testCertificates.testWrongHostCertificate(None, 'google.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
@@ -290,7 +290,7 @@ async def testWrongHostCertificateInvalid(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testWrongHostCertificate(None, 'self-signed.badssl.com')
+    await testCertificates.testWrongHostCertificate(None, 'self-signed.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert 'INCOMPLETE' in msg
 
@@ -305,7 +305,7 @@ async def testUntrustedRootCertificateFail(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testUntrustedRootCertificate(None, 'untrusted-root.badssl.com')
+    await testCertificates.testUntrustedRootCertificate(None, 'untrusted-root.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
@@ -320,7 +320,7 @@ async def testUntrustedRootCertificatePass(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testUntrustedRootCertificate(None, 'google.com')
+    await testCertificates.testUntrustedRootCertificate(None, 'google.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'PASSED'
 
@@ -335,7 +335,7 @@ async def testUntrustedRootCertificateInvalid(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testCertificates.testUntrustedRootCertificate(None, 'self-signed.badssl.com')
+    await testCertificates.testUntrustedRootCertificate(None, 'self-signed.badssl.com', False)
     msg = asyncMock.call_args[0][1]['message']
     assert 'INCOMPLETE' in msg
 
