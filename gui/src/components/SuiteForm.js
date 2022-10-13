@@ -12,10 +12,6 @@ function SuiteForm({socket}) {
         username: "admin"
       }
     }, {
-      name: "test-test-duplicate",
-      mapKey: "testTestDuplicate",
-      label: "Test Test Duplicate"
-    }, {
       name: "test-ddos",
       mapKey: "testDdos",
       label: "DDoS",
