@@ -111,8 +111,7 @@ async def sendRequest(session, url):
 
     except Exception as e:
         print(e)
-
-        return response
+        return None
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
