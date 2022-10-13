@@ -1,5 +1,6 @@
 import storageManager
 from tests import testRequests
+from tests.ddos import testDdos
 from tests.xss import testXss
 from tests.protocol import protocolManager
 import aiohttp
@@ -79,6 +80,8 @@ def stringToFunc(testStr):
         return testRequests.testTest
     elif testStr == "testTestDuplicate":
         return testRequests.testTestDuplicate
+    elif testStr == "testDdos":
+        return testDdos.testDdos
     elif testStr == "bruteForceTest":
         return testBruteForce.testBruteForce
     elif testStr == "xss":
@@ -108,8 +111,7 @@ async def sendRequest(session, url):
 
     except Exception as e:
         print(e)
-
-        return response
+        return None
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):

@@ -12,6 +12,17 @@ function SuiteForm({socket}) {
         username: "admin"
       }
     }, {
+      name: "test-test-duplicate",
+      mapKey: "testTestDuplicate",
+      label: "Test Test Duplicate"
+    }, {
+      name: "test-ddos",
+      mapKey: "testDdos",
+      label: "DDoS",
+      testOptions: {
+        ddosDuration: "30"
+      }
+    }, {
       name: "xss",
       mapKey: "xss",
       label: "XSS"
@@ -40,6 +51,7 @@ function SuiteForm({socket}) {
       },
       label: "Protocol Versions"
     }
+
   ];
 
   const sendSuite = (event) => {
@@ -48,7 +60,7 @@ function SuiteForm({socket}) {
       test => formRef.current[test.name].checked
     ).map(
       test => {
-        if (test.mapKey === "bruteForceTest" || test.mapKey === "testProtocols")
+        if (test.mapKey === "bruteForceTest" || test.mapKey === "testProtocols" || test.mapKey === "testDdos")
           return `"${test.mapKey}": ${JSON.stringify(test.testOptions)}`
         return `"${test.mapKey}": {}`
       }
