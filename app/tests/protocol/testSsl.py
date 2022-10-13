@@ -26,6 +26,7 @@ async def testDefaultTls(ws, url, useDatabase):
 async def testTlsVersion(ws, url, tls_version, useDatabase, port=443):
     '''Check the tls/ssl versions supported by a site'''
     message = ''
+    context = None
     if tls_version == 'SSLv2':
         context = ssl.SSLContext(ssl.PROTOCOL_SSLv2)
         context.maximum_version = ssl.SSLv2

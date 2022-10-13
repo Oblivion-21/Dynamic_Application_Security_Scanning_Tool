@@ -125,7 +125,7 @@ async def testTls12False(mocker):
     asyncMock = mock.AsyncMock()
     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-    await testSsl.testTlsVersion(None, 'tls-v1-0.badssl.com', 'TLSv1.2', 1010)
+    await testSsl.testTlsVersion(None, 'tls-v1-0.badssl.com', 'TLSv1.2', False, 1010)
     msg = asyncMock.call_args[0][1]['message']
     assert msg == 'FAILED'
 
