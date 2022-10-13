@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import testManager
 
+
 # List of passcodes used for brute force
 passList = ["^cH%seY9VP*%f7$k", "ueg+tja(Ush46fJ%",
     "sMcr3tseGnRR3TEf", "K3ffTykBM^yM#yuS",
@@ -41,8 +42,9 @@ async def testBruteForce(ws, session, testConfigs, url, useDatabase):
         postUrlList.append(action)
 
     for scripts in soup.find_all("script"):
-        if "https://www.google.com/recaptcha/api.js" in scripts["src"]:
-            await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "bruteForceTest", useDatabase)
+        
+        if scripts.has_attr("src") and "https://www.google.com/recaptcha/api.js" in scripts["src"]:
+            await testManager.sendMessage(ws, {"message": "PASSED"}, url, True, "bruteForceTest", useDatabase)
             return
 
     # sends username/password combinations to request_URL to detect status code. If the status code alters then the user has been kicked out
@@ -58,12 +60,12 @@ async def testBruteForce(ws, session, testConfigs, url, useDatabase):
                 if statusCodeInit == 0:
                     statusCodeInit = statusCode
                 if statusCodeInit == 405:
-                    await testManager.sendMessage(ws, {"Message": "INVALID"}, url, True, "bruteForceTest", useDatabase)
+                    await testManager.sendMessage(ws, {"message": "INVALID"}, url, True, "bruteForceTest", useDatabase)
                     return
                 if statusCode != statusCodeInit:
-                    await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "bruteForceTest", useDatabase)
+                    await testManager.sendMessage(ws, {"message": "PASSED"}, url, True, "bruteForceTest", useDatabase)
                     return
         
-        await testManager.sendMessage(ws, {"Message": "FAILED"}, url, True, "bruteForceTest", useDatabase)
+        await testManager.sendMessage(ws, {"message": "FAILED"}, url, True, "bruteForceTest", useDatabase)
     except Exception as e:
-        await testManager.sendMessage(ws, {"Message": f"INCOMPLETE - {e}"}, url, True, "bruteForceTest", useDatabase)
+        await testManager.sendMessage(ws, {"message": f"INCOMPLETE - {e}"}, url, True, "bruteForceTest", useDatabase)
