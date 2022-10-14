@@ -1,7 +1,7 @@
 import testManager
 
 
-async def testTest(ws, session, testConfig, url):
+async def testTest(ws, session, testConfig, url, useDatabase=False):
     try:
         testResult = ''
         response = await testManager.sendRequest(session, url)
@@ -14,13 +14,12 @@ async def testTest(ws, session, testConfig, url):
     except Exception as e:
         print(e)
         testResult = 'Incomplete'
-        
 
-    await testManager.sendMessage(ws, {"message": testResult}, True, "testTest")
+    await testManager.sendMessage(ws, {"message": testResult}, url, True, "testTest", useDatabase)
 
 
 #Duplicate for async testing
-async def testTestDuplicate(ws, session, testConfig, url):
+async def testTestDuplicate(ws, session, testConfig, url, useDatabase=False):
     try:
         testResult = ''
         response = await testManager.sendRequest(session, url)
@@ -33,6 +32,5 @@ async def testTestDuplicate(ws, session, testConfig, url):
     except Exception as e:
         print(e)
         testResult = 'Incomplete'
-        
 
-    await testManager.sendMessage(ws, {"message": testResult}, True, "testTestDuplicate")
+    await testManager.sendMessage(ws, {"message": testResult}, url, True, "testTestDuplicate", useDatabase)

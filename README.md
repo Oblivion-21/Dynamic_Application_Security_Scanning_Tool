@@ -22,6 +22,7 @@ npm start
 ## Setup
 
 ```
+cd app
 pip install pipenv
 pipenv --python 3.10
 pipenv --python 3.9
@@ -31,6 +32,14 @@ pipenv install
 ## Start
 
 ```
+cd app
 pipenv run python API.py
+```
+
+## Testing
+
+```
+cd app
+pipenv run pytest
 ```
 

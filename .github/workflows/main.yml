@@ -1,0 +1,26 @@
+name: Base Workflow
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Unit Testing
+    runs-on: Ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+          cache-dependency-path: 'app/Pipfile.lock'
+      - name: Install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+      - run: pipenv install
+        working-directory: app
+      - run: pipenv run pytest
+        working-directory: app
