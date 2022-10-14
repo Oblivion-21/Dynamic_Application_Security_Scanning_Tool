@@ -90,6 +90,8 @@ def stringToFunc(testStr):
         return testSsrf.testSsrf
     elif testStr == "testProtocols":
         return protocolManager.testToRun
+    elif testStr == "siteMap":
+        return siteMap.siteMap
 
 async def initSuite(testList):
     #Initialize test name and function map
@@ -112,6 +114,23 @@ async def sendRequest(session, url):
     except Exception as e:
         print(e)
         return None
+
+async def getSiteContent(session, url):
+    try:
+        if "://" not in url:
+            url = f"http://{url}"
+        #Fetch individual request content
+        async with session.get(url) as response:
+            if response.status < 200 or response.status > 299:
+                raise aiohttp.ClientResponseError()
+
+            #Return awaited response content
+            return (await response.text(), url)
+
+    except Exception as e:
+        print(e)
+
+        return (None,url)
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
