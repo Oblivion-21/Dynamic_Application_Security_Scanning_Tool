@@ -7,12 +7,12 @@ async def testXss(ws, session, testConfigs, url, useDatabase):
     try:
         xssResult = scanXss(url)
         if xssResult:
-            await testManager.sendMessage(ws, {"Message": "FAILED"}, url, True, "xss", useDatabase)
+            await testManager.sendMessage(ws, {"message": "FAILED"}, url, True, "xss", useDatabase)
         else:
-            await testManager.sendMessage(ws, {"Message": "PASSED"}, url, True, "xss", useDatabase)
+            await testManager.sendMessage(ws, {"message": "PASSED"}, url, True, "xss", useDatabase)
         
     except Exception as e:
-        await testManager.sendMessage(ws, {"Message": f"INCOMPLETE - {e}"}, url, True, "xss", useDatabase)
+        await testManager.sendMessage(ws, {"message": f"INCOMPLETE - {e}"}, url, True, "xss", useDatabase)
               
 # When provided with a URL returns number of forms present
 def getAllForms(url):
