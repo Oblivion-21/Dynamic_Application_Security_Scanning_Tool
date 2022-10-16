@@ -30,14 +30,14 @@ async def testSsrfFalse(mocker):
 
     mocker.stopall()
 
-# # Test XSS against a known Incomplete
+# # Test SSRF against a known Incomplete
 # @pytest.mark.asyncio
-# async def testXssIncomplete(mocker):
+# async def testSsrfIncomplete(mocker):
 
 #     asyncMock = mock.AsyncMock()
 #     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-#     await testXss.testXss(None, None, None, 'https://google.com', False)
+#     await testSsrf.testSsrf(None, None, None, '', False)
 #     msg = asyncMock.call_args[0][1]['message']
 #     assert 'INCOMPLETE' in msg
 
