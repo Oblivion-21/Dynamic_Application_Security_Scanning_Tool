@@ -8,19 +8,7 @@ import testManager
 
 #Setup main fuction taking in url as an argument
 async def testSsrf(ws, session, testConfigs, url, useDatabase):
-    try:
-        if "://" not in url:
-            url = f"https://{url}"
-        requests.get(url) 
-    except Exception as e:
-        return await testManager.sendMessage(
-            ws,
-            {"message": f"INVALID - {e}"},
-            url,
-            True,
-            "testSSRF",
-            useDatabase
-        )
+    
 
     configuration = cloudmersive_validate_api_client.Configuration()
     configuration.api_key["Apikey"] = "dd8e000b-9aa3-4991-8925-10835200c34d"
