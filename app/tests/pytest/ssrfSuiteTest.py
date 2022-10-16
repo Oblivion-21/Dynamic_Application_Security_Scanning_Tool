@@ -1,5 +1,6 @@
 import mock
 import pytest
+import cloudmersive_validate_api_client
 
 from tests.ssrf import testSsrf
 pytest_plugins = 'pytest_asyncio'
@@ -30,15 +31,20 @@ async def testSsrfFalse(mocker):
 
     mocker.stopall()
 
-# # Test SSRF against a known Incomplete
-# @pytest.mark.asyncio
-# async def testSsrfIncomplete(mocker):
+# Test SSRF against a known Incomplete
+@pytest.mark.asyncio
+async def testSsrfIncomplete(mocker):
 
-#     asyncMock = mock.AsyncMock()
-#     mocker.patch('testManager.sendMessage', side_effect=asyncMock)
+    asyncMock = mock.AsyncMock()
+    mocker.patch('testManager.sendMessage', side_effect=asyncMock)
 
-#     await testSsrf.testSsrf(None, None, None, '', False)
-#     msg = asyncMock.call_args[0][1]['message']
-#     assert 'INCOMPLETE' in msg
+    configuration = cloudmersive_validate_api_client.Configuration()
+    configuration.api_key["Apikey"] = "a"
+    # create an instance of the API class
+    apiInstance = cloudmersive_validate_api_client.DomainApi(cloudmersive_validate_api_client.ApiClient(configuration))
 
-#     mocker.stopall()
+    await testSsrf.test(None, 'https://github.com/Oblivion-21/Dynamic_Application_Security_Scanning_Tool/', apiInstance, False)
+    msg = asyncMock.call_args[0][1]['message']
+    assert 'INVALID' in msg
+
+    mocker.stopall()
