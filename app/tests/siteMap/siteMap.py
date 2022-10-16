@@ -7,15 +7,15 @@ import time
 import re
 
 
-async def siteMap(ws, session, testConfig, url):
-
+async def siteMap(ws, session, testConfig, url, useDatabase):
+    await testManager.sendMessage(ws, {"message": "CRAWLING"},url, True, "siteMap", useDatabase)
     if '://' not in url:
         url = f"http://{url}"
 
     siteMap = []
     failedURLs = []
     queue = [url]
-    
+
     while len(queue) > 0 and len(siteMap) < 30:
         print("Mapping urls:" + str(queue[:5]) + "\n")
         try:
@@ -24,7 +24,7 @@ async def siteMap(ws, session, testConfig, url):
             )
         except Exception as e:
             print(e)
-            await testManager.sendMessage(ws, {"message": "Sitemap Requests failed"}, True, "siteMap")
+            await testManager.sendMessage(ws, {"message": "INCOMPLETE"}, True, "siteMap", useDatabase)
         queue = queue[5:]
 
         for response, baseURL in responses:
@@ -46,7 +46,6 @@ async def siteMap(ws, session, testConfig, url):
                 print(e)
                 print('Could not parse url: ' + baseURL)
                 failedURLs.append(baseURL)
-                # await testManager.sendMessage(ws, {"message": "Sitemap parse failed"}, True, "siteMap")
 
         print("Current map:" + str(siteMap) + "\n")
         print('Waiting to avoid rate limiting...')
@@ -54,5 +53,7 @@ async def siteMap(ws, session, testConfig, url):
 
     print("Sitemap : " + str(siteMap))
     print(len(siteMap))
-    await testManager.sendMessage(ws, {"message": {"siteMap": str(siteMap), "failedURLs": str(failedURLs)}}, True, "siteMap")
-    
+
+    result = 'PASSED' if siteMap != [] else 'FAILED'
+
+    await testManager.sendMessage(ws, {"message": result, "content": {"siteMap": str(siteMap), "failedURLs": str(failedURLs)}},url, True, "siteMap", useDatabase)

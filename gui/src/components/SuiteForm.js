@@ -16,6 +16,11 @@ function SuiteForm({socket}) {
       name: "site-map",
       mapKey: "siteMap",
       label: "Site Map",
+      testOptions:{
+        limit:"30"
+      }
+    },
+    {
       name: "brute-force-test",
       mapKey: "bruteForceTest",
       label: "Brute Force",

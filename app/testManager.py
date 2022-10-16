@@ -2,6 +2,7 @@ import storageManager
 from tests import testRequests
 from tests.ddos import testDdos
 from tests.xss import testXss
+from tests.siteMap import siteMap
 from tests.protocol import protocolManager
 import aiohttp
 import asyncio
@@ -40,7 +41,7 @@ async def runTests(ws, msg, useDatabase=False):
     testList = list(data['tests'].keys())
     testConfigs = data['tests']
     testUrl = data['url']
-
+    print(testConfigs)
     testSuite = await initSuite(testList)
 
     await sendMessage(ws, createSuite(testUrl, testList, useDatabase))
@@ -134,6 +135,8 @@ async def getSiteContent(session, url):
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
+
+    print(testConfigs)
     #Stasrt async session
     async with aiohttp.ClientSession(
         connector=aiohttp.TCPConnector(ssl=False),
