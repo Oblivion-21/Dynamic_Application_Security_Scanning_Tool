@@ -5,6 +5,8 @@ from urllib.parse import urljoin
 
 async def testXss(ws, session, testConfigs, url, useDatabase):
     try:
+        if "://" not in url:
+            url = f"https://{url}/"
         xssResult = scanXss(url)
         if xssResult:
             await testManager.sendMessage(ws, {"message": "FAILED"}, url, True, "xss", useDatabase)
