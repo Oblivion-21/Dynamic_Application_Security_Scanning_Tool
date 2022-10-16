@@ -46,8 +46,11 @@ function SuiteForm({socket}) {
         ]
       },
       label: "Protocol Versions"
+    }, { 
+      name: "test-logging",
+      mapKey: "testLogging",
+      label: "Logging"
     }
-
   ];
 
   const sendSuite = (event) => {

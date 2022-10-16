@@ -9,6 +9,7 @@ import json
 import API
 from tests.authentication import testBruteForce
 from tests.ssrf import testSsrf
+from tests.logging import testLogging
 
 suiteID = 0
 
@@ -90,6 +91,8 @@ def stringToFunc(testStr):
         return testSsrf.testSsrf
     elif testStr == "testProtocols":
         return protocolManager.testToRun
+    elif testStr == "testLogging":
+        return testLogging.testLogging
 
 async def initSuite(testList):
     #Initialize test name and function map
