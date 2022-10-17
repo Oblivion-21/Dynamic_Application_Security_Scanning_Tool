@@ -44,7 +44,6 @@ function Analysis({socket, analysisMessage}) {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * radian);
     const y = cy + radius * Math.sin(-midAngle * radian);
-
     return (
       <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
         {percent > 0.10 ? `${(percent * 100).toFixed(0)}%`: ``}
@@ -56,7 +55,9 @@ function Analysis({socket, analysisMessage}) {
     if (analysis.length == 0) return <></>;    
     return (
       <Container className="w-100 mw-100 p-0" style={viewStyle}>
-        <h3 className="w-100 mw-100 p-0 m-0 d-flex justify-content-center align-items-center" style={scoreStyle}>Final Score: {analysis["overallScore"]} / 100</h3>
+        <h3 className="w-100 mw-100 p-0 m-0 d-flex justify-content-center align-items-center" style={scoreStyle}>
+          Final Score: {analysis["overallScore"]} / 100
+        </h3>
         <Container className="w-100 mw-100 p-0 h-50 mh-50">
           <ResponsiveContainer width="50%" className="d-inline-block">
             <PieChart width="100%">
