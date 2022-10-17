@@ -49,6 +49,11 @@ def show(limit=20):
     return list(chain(*res))
 
 
+def showWithURL(url):
+    res = databaseExec("sql/showWithURL.sql", {"url": url})
+    return list(chain(*res))
+
+
 def currentIdentity():
     res = databaseExec("sql/currentIdentity.sql")
     if len(res) == 0:
