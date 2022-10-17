@@ -7,7 +7,7 @@ from websockets import serve
 import storageManager
 import testManager
 
-host = "127.0.0.1"
+host = "back_end"
 port = 8989
 processLock = threading.Lock()
 useDatabase = False
