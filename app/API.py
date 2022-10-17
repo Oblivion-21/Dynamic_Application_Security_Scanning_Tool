@@ -4,6 +4,7 @@ import threading
 
 from websockets import serve
 
+import analysisManager
 import storageManager
 import testManager
 
@@ -15,10 +16,13 @@ useDatabase = False
 
 async def messageHand(ws):
     async for msg in ws:
-        if json.loads(msg)["messageType"] == "REQ-HISTORY":
+        msgJson = json.loads(msg)
+        if msgJson["messageType"] == "REQ-HISTORY":
             # TODO: If no database exists send an appropriate message to GUI
             if useDatabase:
                 await history(ws)
+        elif msgJson["messageType"] == "REQ-ANALYSIS":
+            await analysis(ws, msgJson["url"])
         else:
             with processLock:
                 await testManager.runTests(ws, msg, useDatabase)
@@ -39,6 +43,14 @@ async def history(ws):
         "results": storageManager.show()
     }
     await sendMessage(ws, json.dumps(history))
+
+
+async def analysis(ws, url):
+    analysis = {
+        "messageType": "ANALYSIS",
+        "results": analysisManager.analyse(url)
+    }
+    await sendMessage(ws, json.dumps(analysis))
 
 
 if __name__ == "__main__":
