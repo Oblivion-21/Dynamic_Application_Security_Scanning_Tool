@@ -5,7 +5,7 @@ const accordionOutstyle = {
     overflowY: "scroll",
     height: "92vh",
     maxHeight: "92vh",
-  }
+};
 
 function Sites() {
     return (

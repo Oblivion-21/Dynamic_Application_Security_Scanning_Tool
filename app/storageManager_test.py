@@ -57,6 +57,35 @@ def testShowWithNormalRes(mocker):
     mocker.stopall()
 
 
+def testShowWithURLWithEmptyRes(mocker):
+    """Test storageManager.showWithURL when result set for URL is empty"""
+    # SETUP
+    executeMock = mock.Mock()
+    mocker.patch("storageManager.databaseExec", side_effect=executeMock)
+    executeMock.return_value = []
+
+    out = storageManager.showWithURL("google.com")
+    assert out == []
+
+    # TEARDOWN
+    mocker.stopall()
+
+
+def testShowWithURLWithNormalRes(mocker):
+    """Test storageManager.showWithURL when result set for URL is NOT empty"""
+    # SETUP
+    resJson = '{"cool": "epic"}'
+    executeMock = mock.Mock()
+    mocker.patch("storageManager.databaseExec", side_effect=executeMock)
+    executeMock.return_value = [[resJson], [resJson], [resJson]]
+
+    out = storageManager.showWithURL("google.com")
+    assert out == [resJson, resJson, resJson]
+
+    # TEARDOWN
+    mocker.stopall()
+
+
 def testCurrentIdentityWithEmptyRes(mocker):
     # SETUP
     executeMock = mock.Mock()

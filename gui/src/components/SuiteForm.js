@@ -152,7 +152,7 @@ function SuiteForm({socket}) {
   };
 
   return (
-    <Form ref={formRef} className="py-2 px-3 bg-dark text-white d-flex flex-column justify-content-between">
+    <Form ref={formRef} className="py-2 px-3 bg-dark text-white d-flex flex-column justify-content-between h-100 mh-100 w-25 mw-25">
       <Form.Group align="center">
         <hr />
         <Form.Label><h3>OPTIONS</h3></Form.Label>
