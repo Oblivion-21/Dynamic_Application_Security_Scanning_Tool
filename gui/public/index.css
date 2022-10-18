@@ -12,3 +12,8 @@
 tspan {
     font-weight: bold;
 }
+
+input[type="checkbox"] {
+    padding: 0.75em;
+    margin-right: 0.75em !important;
+}
