@@ -4,6 +4,7 @@ services:
     front_end:
         build: ./gui
         container_name: dast_front_end
+          # command: export REACT_APP_BACK_END=$(host back_end | grep -oP "\d+.\d+.\d+.\d+")
         depends_on:
             - back_end
         networks:
