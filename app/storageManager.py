@@ -7,7 +7,7 @@ connectArgs = {
     "dbname": "dast",
     "user": "dastuser",
     "password": "password",
-    "host": "127.0.0.1",
+    "host": "database",
     "port": 5432
 }
 
