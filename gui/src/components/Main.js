@@ -6,10 +6,12 @@ import Testing from "./Testing";
 import Suites from "./Suites";
 import History from "./History";
 import Sites from "./Sites";
+import Analysis from "./Analysis";
 
 function Main({socket}) {
   const [suiteMessage, setSuiteMessage] = useState("");
   const [historyMessage, setHistoryMessage] = useState("");
+  const [analysisMessage, setAnalysisMessage] = useState("");
   
   socket.onmessage = (event) => {
     const data = event.data;
@@ -24,24 +26,29 @@ function Main({socket}) {
       case "HISTORY":
         setHistoryMessage(jsonData);
         break;
+      case "ANALYSIS":
+        setAnalysisMessage(jsonData);
       default:
         break;
     }
   };
 
-
+  const tabsStyle = {
+    height: "5%",
+    minHeight: "5%",
+  };
 
   return (
-    <Container fluid className="w-100 py-2 px-0 h-100 mh-100">
-      <Tabs justify defaultActiveKey="suites">
+    <Container fluid className="py-2 px-0 h-100 mh-100 w-75 mw-75">
+      <Tabs justify defaultActiveKey="suites" className="w-100 mw-100" style={tabsStyle}>
         <Tab eventKey="suites" title="Suites">
           <Suites suiteMessage={suiteMessage}/>
         </Tab>
         <Tab eventKey="history" title="History">
           <History socket={socket} historyMessage={historyMessage}/>
         </Tab> 
-        <Tab eventKey="analysis" title="Analysis">
-
+        <Tab eventKey="analysis" title="Analysis" className="h-100 mh-100 w-100 mw-100">
+          <Analysis socket={socket} analysisMessage={analysisMessage}/>
         </Tab>
         <Tab eventKey="testing" title="Testing">
           <Testing socket={socket}/>

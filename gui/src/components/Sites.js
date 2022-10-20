@@ -5,7 +5,7 @@ const accordionOutstyle = {
     overflowY: "scroll",
     height: "92vh",
     maxHeight: "92vh",
-  }
+};
 
 function Sites() {
     return (
@@ -23,12 +23,16 @@ function Sites() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Pass</td>
+                        <td>https://github.com/Oblivion-21/Dynamic_Application_Security_Scanning_Tool/</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Fail</td>
+                        <td>http://169.254.169.254/</td>
+                    </tr>
+                    <tr>
+                        <td>Invalid</td>
+                        <td>https://github.com/Oblivion-21/Dynamic_Application_Security_Scanning_Tool/</td>
                     </tr>
                 </tbody>
             </Table>
@@ -47,19 +51,15 @@ function Sites() {
                 <tbody>
                     <tr>
                         <td>Pass</td>
-                        <td>https://soundcloud.com/discover/sets/track-stations:443037147</td>
-                    </tr>
-                    <tr>
-                        <td>Pass</td>
-                        <td>https://github.com/Oblivion-21/Dynamic_Application_Security_Scanning_Tool/branches/active</td>
-                    </tr>
-                    <tr>
-                        <td>Fail</td>
-                        <td>http://testhtml5.vulnweb.com/#/popular</td>
+                        <td>https://github.com/Oblivion-21/Dynamic_Application_Security_Scanning_Tool</td>
                     </tr>
                     <tr>
                         <td>Fail</td>
                         <td>https://xss-game.appspot.com/level1/frame</td>
+                    </tr>
+                    <tr>
+                        <td>Incomplete</td>
+                        <td>https://google.com</td>
                     </tr>
                 </tbody>
             </Table>
@@ -77,12 +77,16 @@ function Sites() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Pass</td>
+                        <td>https://s1.swin.edu.au/eStudent/login.aspx</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Fail</td>
+                        <td>www.team17.com/wp-login.php</td>
+                    </tr>
+                    <tr>
+                        <td>Invalid</td>
+                        <td>google.com</td>
                     </tr>
                 </tbody>
             </Table>
@@ -100,12 +104,12 @@ function Sites() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Pass</td>
+                        <td>www.google.com</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Fail</td>
+                        <td>www.gdsadsadsadsaoogle.com</td>
                     </tr>
                 </tbody>
             </Table>
@@ -146,35 +150,16 @@ function Sites() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Pass</td>
+                        <td>google.com</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </Table>
-            </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="6">
-            <Accordion.Header>Injection</Accordion.Header>
-            <Accordion.Body>
-            <Table striped>
-                <thead>
-                    <tr>
-                        <th>Expected Result</th>
-                        <th>Site Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Fail</td>
+                        <td>https://liveswinburneeduau-my.sharepoint.com/:u:/g/personal/102568843_student_swin_edu_au/Efh1aNATAp9Avm_9N4-EUFIBEfS7q6VWpkE7byjxRZr_ug?e=h71kNn</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Invalid</td>
+                        <td>badwebsite.com</td>
                     </tr>
                 </tbody>
             </Table>

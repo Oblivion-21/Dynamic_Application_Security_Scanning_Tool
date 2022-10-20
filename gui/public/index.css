@@ -3,3 +3,17 @@
     height: 100vh;
     max-height: 100vh;
 }
+
+.tab-content {
+    height: 95%;
+    min-height: 95%;
+}
+
+tspan {
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    padding: 0.75em;
+    margin-right: 0.75em !important;
+}

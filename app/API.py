@@ -4,10 +4,11 @@ import threading
 
 from websockets import serve
 
+import analysisManager
 import storageManager
 import testManager
 
-host = "127.0.0.1"
+host = "back_end"
 port = 8989
 processLock = threading.Lock()
 useDatabase = False
@@ -15,10 +16,13 @@ useDatabase = False
 
 async def messageHand(ws):
     async for msg in ws:
-        if json.loads(msg)["messageType"] == "REQ-HISTORY":
+        msgJson = json.loads(msg)
+        if msgJson["messageType"] == "REQ-HISTORY":
             # TODO: If no database exists send an appropriate message to GUI
             if useDatabase:
                 await history(ws)
+        elif msgJson["messageType"] == "REQ-ANALYSIS":
+            await analysis(ws, msgJson["url"])
         else:
             with processLock:
                 await testManager.runTests(ws, msg, useDatabase)
@@ -41,8 +45,20 @@ async def history(ws):
     await sendMessage(ws, json.dumps(history))
 
 
+async def analysis(ws, url):
+    analysis = {
+        "messageType": "ANALYSIS",
+        "results": analysisManager.analyse(url)
+    }
+    await sendMessage(ws, json.dumps(analysis))
+
+
 if __name__ == "__main__":
-    useDatabase = storageManager.setup()
+    useDatabase = False
+    try:
+        useDatabase = storageManager.setup()
+    except Exception as e:
+        print(f"Setting up database failed with: {e}")
     if useDatabase:
         testManager.setSuiteID()
     print(f"Websocket API running: {host}:{port}")

@@ -7,7 +7,7 @@ connectArgs = {
     "dbname": "dast",
     "user": "dastuser",
     "password": "password",
-    "host": "127.0.0.1",
+    "host": "database",
     "port": 5432
 }
 
@@ -46,6 +46,11 @@ def testUpdate(suiteID, test, data):
 
 def show(limit=20):
     res = databaseExec("sql/show.sql", {"limit": limit})
+    return list(chain(*res))
+
+
+def showWithURL(url):
+    res = databaseExec("sql/showWithURL.sql", {"url": url})
     return list(chain(*res))
 
 

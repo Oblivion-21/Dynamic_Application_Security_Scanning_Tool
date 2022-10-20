@@ -3,25 +3,34 @@ version: '3.9'
 services:
     front_end:
         build: ./gui
-        container_name: front_end
+        container_name: dast_front_end
+          # command: export REACT_APP_BACK_END=$(host back_end | grep -oP "\d+.\d+.\d+.\d+")
         depends_on:
             - back_end
-        network_mode: host
+        networks:
+          - dast
+        ports:
+          - "80:3000"
 
     back_end:
         build: ./app
-        container_name: back_end
+        container_name: dast_back_end
         depends_on:
             - database
-        network_mode: host
+        networks:
+          - dast
         environment:
           - PYTHONUNBUFFERED=1 # This is for testing, it lets the container output to the terminal (i.e. print statments for testing)
 
     database:
         image: postgres:14.5-alpine
         container_name: dast_database
-        network_mode: host
+        networks:
+          - dast
         volumes:
             - /opt/dast/db:/var/lib/postgresql/data
         env_file:
             - .db.env
+
+networks:
+  dast:
