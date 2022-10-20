@@ -15,8 +15,9 @@ async def siteMap(ws, session, testConfig, url, useDatabase):
     siteMap = []
     failedURLs = []
     queue = [url]
+    limit = int(testConfig.get('limit', 30))
 
-    while len(queue) > 0 and len(siteMap) < 30:
+    while len(queue) > 0 and len(siteMap) < limit:
         print("Mapping urls:" + str(queue[:5]) + "\n")
         try:
             responses = await asyncio.gather(
@@ -56,4 +57,4 @@ async def siteMap(ws, session, testConfig, url, useDatabase):
 
     result = 'PASSED' if siteMap != [] else 'FAILED'
 
-    await testManager.sendMessage(ws, {"message": result, "content": {"siteMap": str(siteMap), "failedURLs": str(failedURLs)}},url, True, "siteMap", useDatabase)
+    await testManager.sendMessage(ws, {"message": result, "content": {"siteMap": str(siteMap[:limit]), "failedURLs": str(failedURLs)}},url, True, "siteMap", useDatabase)
