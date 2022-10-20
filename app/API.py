@@ -54,7 +54,11 @@ async def analysis(ws, url):
 
 
 if __name__ == "__main__":
-    useDatabase = storageManager.setup()
+    useDatabase = False
+    try:
+        useDatabase = storageManager.setup()
+    except Exception as e:
+        print(f"Setting up database failed with: {e}")
     if useDatabase:
         testManager.setSuiteID()
     print(f"Websocket API running: {host}:{port}")

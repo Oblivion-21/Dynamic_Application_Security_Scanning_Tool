@@ -13,12 +13,14 @@ function ConfigButton({children, eventKey}) {
 function SuiteForm({socket}) {
   // Test name strings
   const bruteForceName = "brute-force-test";
+  const siteMapName = "site-map";
   const ddosName = "test-ddos";
   const xssName = "xss";
   const ssrfName = "test-ssrf";
   const suiteProtocolName = "suite-protocol";
   // Test config label strings
   const bruteForceUsername = "bruteForceUsername";
+  const siteLimit = "siteLimit";
   const ddosDuration = "ddosDuration";
   const testHttps = "testHttps";
   const testDefaultTls = "testDefaultTls";
@@ -34,6 +36,10 @@ function SuiteForm({socket}) {
   const formRef = useRef();
   const tests = [
     {
+      name: siteMapName,
+      mapKey: "siteMap",
+      label: "Site Map"
+    }, {
       name: bruteForceName,
       mapKey: "bruteForceTest",
       label: "Brute Force"
@@ -74,6 +80,10 @@ function SuiteForm({socket}) {
           case ddosName:
             return `"${test.mapKey}": {
               "ddosDuration": "${formRef.current[ddosDuration].value}"
+            }`;
+          case siteMapName:
+            return `"${test.mapKey}": {
+              "limit": "${formRef.current[siteLimit].value}"
             }`;
           case suiteProtocolName:
             const subTests = [
@@ -122,27 +132,34 @@ function SuiteForm({socket}) {
         return (
           <Card.Body align="left">
             <Form.Label>DDoS Duration (Seconds)</Form.Label>
-            <Form.Control type="number" defaultValue={30} name="ddosDuration" required/>
+            <Form.Control type="number" defaultValue={30} name={ddosDuration} required/>
           </Card.Body>
         );
+      case siteMapName:
+          return (
+            <Card.Body align="left">
+              <Form.Label>Limit</Form.Label>
+              <Form.Control type="number" defaultValue={30} name={siteLimit} required/>
+            </Card.Body>
+          );
       case suiteProtocolName:
         return (
           <Card.Body align="left">
             <Form.Label>Sub Tests</Form.Label>
             <Form.Group>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testHttps" label="Test Https"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testDefaultTls" label="Test Default TLS"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testTlsVersions" label="Test TLS Versions"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testSelfSignedCertificate" label="Test Self Signed Certificate"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testExpiredCertificate" label="Test Expired Certificate"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testWrongHostCertificate" label="Test Wrong Host Certificate"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="testUntrustedRootCertificate" label="Test Untrusted Root Certificate"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testHttps} label="Test Https"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testDefaultTls} label="Test Default TLS"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testTlsVersions} label="Test TLS Versions"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testSelfSignedCertificate} label="Test Self Signed Certificate"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testExpiredCertificate} label="Test Expired Certificate"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testWrongHostCertificate} label="Test Wrong Host Certificate"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={testUntrustedRootCertificate} label="Test Untrusted Root Certificate"/>
             </Form.Group>
             <Form.Label>TLS Versions</Form.Label>
             <Form.Group className="d-flex flex-column">
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="TLSv1.1" label="TLSv1.1"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="TLSv1.2" label="TLSv1.2"/>
-              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name="TLSv1.3" label="TLSv1.3"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={TLSv11} label="TLSv1.1"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={TLSv12} label="TLSv1.2"/>
+              <Form.Check type="checkbox" className="d-flex align-items-center" defaultChecked name={TLSv13} label="TLSv1.3"/>
             </Form.Group>
           </Card.Body>
         );

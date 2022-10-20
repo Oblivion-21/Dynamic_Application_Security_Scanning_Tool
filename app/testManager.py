@@ -2,6 +2,7 @@ import storageManager
 from tests import testRequests
 from tests.ddos import testDdos
 from tests.xss import testXss
+from tests.siteMap import siteMap
 from tests.protocol import protocolManager
 import aiohttp
 import asyncio
@@ -41,7 +42,6 @@ async def runTests(ws, msg, useDatabase=False):
     testList = list(data['tests'].keys())
     testConfigs = data['tests']
     testUrl = data['url']
-
     testSuite = await initSuite(testList)
 
     await sendMessage(ws, createSuite(testUrl, testList, useDatabase))
@@ -91,6 +91,8 @@ def stringToFunc(testStr):
         return testSsrf.testSsrf
     elif testStr == "testProtocols":
         return protocolManager.testToRun
+    elif testStr == "siteMap":
+        return siteMap.siteMap
     elif testStr == "testLogging":
         return testLogging.testLogging
 
@@ -115,6 +117,23 @@ async def sendRequest(session, url):
     except Exception as e:
         print(e)
         return None
+
+async def getSiteContent(session, url):
+    try:
+        if "://" not in url:
+            url = f"http://{url}"
+        #Fetch individual request content
+        async with session.get(url) as response:
+            if response.status < 200 or response.status > 299:
+                raise aiohttp.ClientResponseError()
+
+            #Return awaited response content
+            return (await response.text(), url)
+
+    except Exception as e:
+        print(e)
+
+        return (None,url)
 
 #Run suite of tests asynchronously
 async def runSuite(ws, testSuite, testConfigs, url, useDatabase=False):
