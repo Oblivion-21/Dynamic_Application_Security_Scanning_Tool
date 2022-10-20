@@ -5,14 +5,6 @@ import Button from "react-bootstrap/Button";
 function SuiteForm({socket}) {
   const formRef = useRef();
   const tests = [{
-      name: "test-test",
-      mapKey: "testTest",
-      label: "Test Test",
-    }, {
-      name: "test-test-duplicate",
-      mapKey: "testTestDuplicate",
-      label: "Test Test Duplicate"
-    }, {
       name: "site-map",
       mapKey: "siteMap",
       label: "Site Map",
