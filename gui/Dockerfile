@@ -9,8 +9,8 @@ WORKDIR /app
 COPY . .
 
 RUN chown -R node /app
-RUN chown root /app/node_modules/electron/dist/chrome-sandbox
-RUN chmod 4755 /app/node_modules/electron/dist/chrome-sandbox
+RUN chown root /app/node_modules/electron/dist/chrome-sandbox || echo "Windows OS"
+RUN chmod 4755 /app/node_modules/electron/dist/chrome-sandbox || echo "Windows OS"
 
 USER node
 RUN npm install
